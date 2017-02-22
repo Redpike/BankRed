@@ -30,6 +30,9 @@
         <vaadin-lazyquerycontainer.version>7.4.0.1</vaadin-lazyquerycontainer.version>
         <popupbutton.version>2.5.0</popupbutton.version>
         <viritin.version>1.47</viritin.version>
+        <vaadin-sidemenu.version>1.0</vaadin-sidemenu.version>
+        <vaadin.widgetset.mode>local</vaadin.widgetset.mode>
+        <vaadin.theme>bankred</vaadin.theme>
 
         <project.file.encoding>UTF-8</project.file.encoding>
         <project.source.version>1.8</project.source.version>
@@ -72,9 +75,12 @@
                     <executions>
                         <execution>
                             <goals>
+                                <goal>clean</goal>
+                                <goal>resources</goal>
+                                <goal>update-theme</goal>
                                 <goal>update-widgetset</goal>
-                                <goal>compile</goal>
                                 <goal>compile-theme</goal>
+                                <goal>compile</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -276,6 +282,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- VAADIN ADD-ONS -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-cdi</artifactId>
@@ -326,6 +333,11 @@
             <artifactId>viritin</artifactId>
             <version>${viritin.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.teemusa</groupId>
+            <artifactId>sidemenu</artifactId>
+            <version>${vaadin-sidemenu.version}</version>
         </dependency>
 
         <!-- SERVLET API -->
