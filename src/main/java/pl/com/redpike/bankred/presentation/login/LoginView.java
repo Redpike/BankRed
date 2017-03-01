@@ -1,12 +1,13 @@
 package pl.com.redpike.bankred.presentation.login;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
+import pl.com.redpike.bankred.control.login.LoginPresenter;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
  * Created by rs3 on 22.02.2017.
@@ -14,9 +15,10 @@ import javax.annotation.PostConstruct;
 @CDIView(LoginView.VIEW_ID)
 public class LoginView extends CustomComponent implements View {
 
-    public static final String VIEW_ID = "login";
+    @Inject
+    private LoginPresenter loginPresenter;
 
-    private Navigator navigator;
+    public static final String VIEW_ID = "";
 
     @PostConstruct
     private void init() {
@@ -29,10 +31,10 @@ public class LoginView extends CustomComponent implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        navigator = getUI().getNavigator();
+
     }
 
-    public Navigator getNavigator() {
-        return navigator;
+    public LoginPresenter getPresenter(){
+        return loginPresenter;
     }
 }

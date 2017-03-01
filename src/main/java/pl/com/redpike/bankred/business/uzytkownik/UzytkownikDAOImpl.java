@@ -16,6 +16,19 @@ public class UzytkownikDAOImpl implements UzytkownikDAO {
 
     @Override
     public List<Uzytkownik> findAll() {
-        return em.createNativeQuery("SELECT* FROM Uzytkownik u", Uzytkownik.class).getResultList();
+        return em.createNativeQuery("SELECT * FROM Uzytkownik u", Uzytkownik.class).getResultList();
+    }
+
+    @Override
+    public Uzytkownik getUzytkownik(String username) {
+        return em.createQuery("FROM Uzytkownik u WHERE u.nazwa = :username", Uzytkownik.class)
+                .setParameter("username", username)
+                .getResultList().get(0);
+    }
+
+    @Override
+    public void removeUzytkownik(Uzytkownik uzytkownik) {
+        uzytkownik = em.getReference(Uzytkownik.class, uzytkownik.getId());
+        em.remove(uzytkownik);
     }
 }

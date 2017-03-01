@@ -10,4 +10,8 @@ import java.util.List;
 public interface UzytkownikDAO {
 
     List<Uzytkownik> findAll();
+
+    Uzytkownik getUzytkownik(String username);
+
+    void removeUzytkownik(Uzytkownik uzytkownik);
 }
