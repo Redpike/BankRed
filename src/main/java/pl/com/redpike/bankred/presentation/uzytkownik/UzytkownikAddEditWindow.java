@@ -1,6 +1,5 @@
 package pl.com.redpike.bankred.presentation.uzytkownik;
 
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -19,9 +18,10 @@ public class UzytkownikAddEditWindow extends Window {
     public UzytkownikAddEditWindow() {
         setCaption( "Dodaj/Edytuj użytkownika");
         setIcon(FontAwesome.USER);
-        addCloseShortcut(ShortcutAction.KeyCode.ESCAPE);
         setModal(true);
         setResizable(false);
+        setHeight(550, Unit.PIXELS);
+        setWidth(400, Unit.PIXELS);
         setContent(uzytkownikForm);
     }
 

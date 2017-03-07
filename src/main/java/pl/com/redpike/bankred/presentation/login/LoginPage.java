@@ -7,10 +7,12 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MPasswordField;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import pl.com.redpike.bankred.control.login.LoggedUserEvent;
+import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
+import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
 import pl.com.redpike.bankred.security.SHAProvider;
 
-import javax.enterprise.event.Event;
+import javax.ejb.EJBException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by rs3 on 22.02.2017.
@@ -62,14 +64,16 @@ public class LoginPage extends VerticalLayout {
     private void addListeners() {
         loginButton.addClickListener(clickEvent -> {
             try {
-                if (usernameField.getValue().equals(loginView.getPresenter().getUzytkownik(usernameField.getValue()).getNazwa()) &&
-                        SHAProvider.hashPassword(passwordField.getValue()).equals(loginView.getPresenter().getUzytkownik(usernameField.getValue()).getHaslo()))
-                    loginView.getPresenter().onLoginButtonPressed(loginView.getPresenter().getUzytkownik(usernameField.getValue()).getImie(),
-                            loginView.getPresenter().getUzytkownik(usernameField.getValue()).getNazwisko());
+                Uzytkownik uzytkownik = loginView.getPresenter().getUzytkownikOnLogIn(usernameField.getValue(), SHAProvider.hashPassword(passwordField.getValue()));
+
+                if (uzytkownik != null && uzytkownik.getZablokowany().getDatabaseValue().equalsIgnoreCase(UzytkownikZablokowanyEnum.NIE_LOW.getDatabaseValue()))
+                    loginView.getPresenter().onLoginButtonPressed(uzytkownik.getImie(), uzytkownik.getNazwisko());
+                else if (uzytkownik != null && uzytkownik.getZablokowany().getDatabaseValue().equalsIgnoreCase(UzytkownikZablokowanyEnum.TAK_LOW.getDatabaseValue()))
+                    Notification.show("Użytkownik " + usernameField.getValue() + " jest zablokowany. Skontaktuj się z administratorem.", Notification.Type.WARNING_MESSAGE);
                 else
-                    Notification.show("Błędne dane użytkownika", Notification.Type.ERROR_MESSAGE);
-            } catch (Exception e) {
-                Notification.show("Błędne dane użytkownika", Notification.Type.ERROR_MESSAGE);
+                    Notification.show("Błędne dane logowania", Notification.Type.ERROR_MESSAGE);
+            } catch (EJBException | NoSuchAlgorithmException e) {
+                Notification.show("Błędne dane logowania", Notification.Type.ERROR_MESSAGE);
             }
         });
     }

@@ -1,5 +1,9 @@
 package pl.com.redpike.bankred.business.uzytkownik;
 
+import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyConverter;
+import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
+import pl.com.redpike.bankred.business.rola.Rola;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +40,14 @@ public class Uzytkownik {
     @Size(max = 80)
     @Column(name = "nazwisko", length = 80)
     private String nazwisko;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rola")
+    private Rola rola;
+
+    @Convert(converter = UzytkownikZablokowanyConverter.class)
+    @Column(name = "zabl", length = 1)
+    private UzytkownikZablokowanyEnum zablokowany;
 
     public BigDecimal getId() {
         return id;
@@ -77,6 +89,22 @@ public class Uzytkownik {
         this.nazwisko = nazwisko;
     }
 
+    public Rola getRola() {
+        return rola;
+    }
+
+    public void setRola(Rola rola) {
+        this.rola = rola;
+    }
+
+    public UzytkownikZablokowanyEnum getZablokowany() {
+        return zablokowany;
+    }
+
+    public void setZablokowany(UzytkownikZablokowanyEnum zablokowany) {
+        this.zablokowany = zablokowany;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +116,9 @@ public class Uzytkownik {
         if (nazwa != null ? !nazwa.equals(that.nazwa) : that.nazwa != null) return false;
         if (haslo != null ? !haslo.equals(that.haslo) : that.haslo != null) return false;
         if (imie != null ? !imie.equals(that.imie) : that.imie != null) return false;
-        return nazwisko != null ? nazwisko.equals(that.nazwisko) : that.nazwisko == null;
+        if (nazwisko != null ? !nazwisko.equals(that.nazwisko) : that.nazwisko != null) return false;
+        if (rola != null ? !rola.equals(that.rola) : that.rola != null) return false;
+        return zablokowany == that.zablokowany;
     }
 
     @Override
@@ -98,6 +128,8 @@ public class Uzytkownik {
         result = 31 * result + (haslo != null ? haslo.hashCode() : 0);
         result = 31 * result + (imie != null ? imie.hashCode() : 0);
         result = 31 * result + (nazwisko != null ? nazwisko.hashCode() : 0);
+        result = 31 * result + (rola != null ? rola.hashCode() : 0);
+        result = 31 * result + (zablokowany != null ? zablokowany.hashCode() : 0);
         return result;
     }
 
@@ -109,6 +141,8 @@ public class Uzytkownik {
                 ", haslo='" + haslo + '\'' +
                 ", imie='" + imie + '\'' +
                 ", nazwisko='" + nazwisko + '\'' +
+                ", rola=" + rola +
+                ", zablokowany=" + zablokowany +
                 '}';
     }
 }

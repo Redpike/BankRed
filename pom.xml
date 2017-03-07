@@ -320,7 +320,7 @@
             <groupId>org.vaadin.addon</groupId>
             <artifactId>confirmdialog</artifactId>
             <version>${confirmdialog.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

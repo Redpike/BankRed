@@ -27,6 +27,14 @@ public class UzytkownikDAOImpl implements UzytkownikDAO {
     }
 
     @Override
+    public Uzytkownik getUzytkownikOnLogIn(String username, String password) {
+        return em.createQuery("FROM Uzytkownik u where u.nazwa = :username AND u.haslo = :password", Uzytkownik.class)
+                .setParameter("username", username)
+                .setParameter("password", password)
+                .getResultList().get(0);
+    }
+
+    @Override
     public void removeUzytkownik(Uzytkownik uzytkownik) {
         uzytkownik = em.getReference(Uzytkownik.class, uzytkownik.getId());
         em.remove(uzytkownik);

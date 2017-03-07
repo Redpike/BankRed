@@ -13,5 +13,7 @@ public interface UzytkownikDAO {
 
     Uzytkownik getUzytkownik(String username);
 
+    Uzytkownik getUzytkownikOnLogIn(String username, String password);
+
     void removeUzytkownik(Uzytkownik uzytkownik);
 }

@@ -21,6 +21,10 @@ public class LoginPresenter {
         return uzytkownikPresenter.getUzytkownik(username);
     }
 
+    public Uzytkownik getUzytkownikOnLogIn(String username, String password) {
+        return uzytkownikPresenter.getUzytkownikOnLogIn(username, password);
+    }
+
     public void onLoginButtonPressed(String name, String surname) {
         loggedUserEvent.fire(new LoggedUserEvent(name, surname));
     }

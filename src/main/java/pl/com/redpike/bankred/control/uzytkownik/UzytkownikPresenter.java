@@ -22,6 +22,10 @@ public class UzytkownikPresenter {
         return uzytkownikDAO.getUzytkownik(username);
     }
 
+    public Uzytkownik getUzytkownikOnLogIn(String username, String password) {
+        return uzytkownikDAO.getUzytkownikOnLogIn(username, password);
+    }
+
     public void removeUzytkownik(Uzytkownik uzytkownik) {
         uzytkownikDAO.removeUzytkownik(uzytkownik);
     }
