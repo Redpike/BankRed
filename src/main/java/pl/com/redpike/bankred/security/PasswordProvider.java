@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by Redpike
  */
-public class SHAProvider {
+public class PasswordProvider {
 
     public static String hashPassword(String plainPassword) throws NoSuchAlgorithmException {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

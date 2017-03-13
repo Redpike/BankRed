@@ -1,5 +1,8 @@
 package pl.com.redpike.bankred.business.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Redpike
  */
@@ -33,5 +36,13 @@ public enum UzytkownikZablokowanyEnum {
             return NIE_UPP;
 
         throw new IllegalArgumentException();
+    }
+
+    public static List<UzytkownikZablokowanyEnum> getEnumsForComboBox() {
+        List<UzytkownikZablokowanyEnum> uzytkownikZablokowanyEnums = new ArrayList<>();
+        uzytkownikZablokowanyEnums.add(NIE_UPP);
+        uzytkownikZablokowanyEnums.add(TAK_UPP);
+
+        return uzytkownikZablokowanyEnums;
     }
 }

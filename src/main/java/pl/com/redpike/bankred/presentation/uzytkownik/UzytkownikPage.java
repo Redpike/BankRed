@@ -1,6 +1,7 @@
 package pl.com.redpike.bankred.presentation.uzytkownik;
 
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -8,15 +9,15 @@ import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
-import pl.com.redpike.bankred.util.CRUDButtonLayout;
+import pl.com.redpike.bankred.util.components.CRUDButtonLayout;
+import pl.com.redpike.bankred.util.properties.UzytkownikPropertyUtil;
 
 /**
  * Created by Redpike
  */
 public class UzytkownikPage extends Panel {
 
-    private final UzytkownikView uzytkownikView;
-
+    private UzytkownikView uzytkownikView;
     private MVerticalLayout verticalLayout;
     private CRUDButtonLayout crudButtonLayout;
     private MTable<Uzytkownik> table;
@@ -32,8 +33,14 @@ public class UzytkownikPage extends Panel {
 
     private void initComponents() {
         crudButtonLayout = new CRUDButtonLayout();
+        crudButtonLayout.getEditButton().setEnabled(false);
+        crudButtonLayout.getDeleteButton().setEnabled(false);
+
         initUzytkownikTable();
-        verticalLayout = new MVerticalLayout().withMargin(true).withSpacing(true).withFullWidth()
+        verticalLayout = new MVerticalLayout()
+                .withMargin(true)
+                .withSpacing(true)
+                .withFullWidth()
                 .with(crudButtonLayout, table);
     }
 
@@ -46,22 +53,39 @@ public class UzytkownikPage extends Panel {
 
     private void addListeners() {
         crudButtonLayout.getAddButton().addClickListener(clickEvent -> {
-            uzytkownikAddEditWindow = new UzytkownikAddEditWindow();
-            uzytkownikAddEditWindow.openForSelectedUzytkownik(new Uzytkownik());
+            uzytkownikAddEditWindow = new UzytkownikAddEditWindow(uzytkownikView);
+            getUI().addWindow(uzytkownikAddEditWindow);
         });
 
         crudButtonLayout.getEditButton().addClickListener(clickEvent -> {
-            uzytkownikAddEditWindow = new UzytkownikAddEditWindow();
+            uzytkownikAddEditWindow = new UzytkownikAddEditWindow(uzytkownikView);
             uzytkownikAddEditWindow.openForSelectedUzytkownik(table.getValue());
         });
 
         crudButtonLayout.getDeleteButton().addClickListener(clickEvent -> {
-            ConfirmDialog.show(getUI(), "Usuwanie użytkownika", "Czy na pewno chcesz usunąć użytkownika " + table.getValue().getNazwa(), "Tak", "Anuluj", confirmDialog -> {
-                uzytkownikView.getUzytkownikPresenter().removeUzytkownik(table.getValue());
-                table.getContainerDataSource().removeAllItems();
-                table.setBeans(uzytkownikView.getUzytkownikPresenter().getAllUzytkowniki());
+            Uzytkownik uzytkownik = table.getValue();
+
+            ConfirmDialog.show(getUI(), "Usuwanie użytkownika", "Czy na pewno chcesz usunąć użytkownika " + uzytkownik.getNazwa(), "Tak", "Anuluj", confirmDialog -> {
+                uzytkownikView.getUzytkownikPresenter().removeUzytkownik(uzytkownik);
+                refreshTable();
+                Notification.show("Uzytkownik " + uzytkownik.getNazwa() + " został usunięty", Notification.Type.TRAY_NOTIFICATION);
             });
         });
+
+        table.addValueChangeListener(event -> {
+            if (event.getProperty().getValue() != null) {
+                crudButtonLayout.getEditButton().setEnabled(true);
+                crudButtonLayout.getDeleteButton().setEnabled(true);
+            } else {
+                crudButtonLayout.getEditButton().setEnabled(false);
+                crudButtonLayout.getDeleteButton().setEnabled(false);
+            }
+        });
+    }
+
+    public void refreshTable() {
+        table.getContainerDataSource().removeAllItems();
+        table.setBeans(uzytkownikView.getUzytkownikPresenter().getAllUzytkownicy());
     }
 
     private void initUzytkownikTable() {
@@ -69,25 +93,31 @@ public class UzytkownikPage extends Panel {
         table.setSelectable(true);
         table.setImmediate(true);
         table.setSizeFull();
-        table.setBeans(uzytkownikView.getUzytkownikPresenter().getAllUzytkowniki());
-        table.setVisibleColumns("nazwa", "imie", "nazwisko", "rola", "zablokowany");
+        table.setVisibleColumns(
+                UzytkownikPropertyUtil.NAZWA,
+                UzytkownikPropertyUtil.IMIE,
+                UzytkownikPropertyUtil.NAZWISKO,
+                UzytkownikPropertyUtil.ROLA,
+                UzytkownikPropertyUtil.ZABLOKOWANY
+        );
+
         setTableHeaders();
         addColumnConverter();
+        refreshTable();
     }
 
     private void setTableHeaders() {
-        table.setColumnHeader("nazwa", "Nazwa użytkownika");
-        table.setColumnHeader("imie", "Imię");
-        table.setColumnHeader("nazwisko", "Nazwisko");
-        table.setColumnHeader("rola", "Rola");
-        table.setColumnHeader("zablokowany", "Czy zablokowany");
+        table.setColumnHeader(UzytkownikPropertyUtil.NAZWA, UzytkownikPropertyUtil.NAZWA_HEADER);
+        table.setColumnHeader(UzytkownikPropertyUtil.IMIE, UzytkownikPropertyUtil.IMIE_HEADER);
+        table.setColumnHeader(UzytkownikPropertyUtil.NAZWISKO, UzytkownikPropertyUtil.NAZWISKO_HEADER);
+        table.setColumnHeader(UzytkownikPropertyUtil.ROLA, UzytkownikPropertyUtil.ROLA_HEADER);
+        table.setColumnHeader(UzytkownikPropertyUtil.ZABLOKOWANY, UzytkownikPropertyUtil.ZABLOKOWANY_HEADER);
     }
 
     private void addColumnConverter() {
-        table.addGeneratedColumn("zablokowany", (Table.ColumnGenerator) (table, itemId, columnId) -> {
+        table.addGeneratedColumn(UzytkownikPropertyUtil.ZABLOKOWANY, (Table.ColumnGenerator) (table, itemId, columnId) -> {
             if (columnId != null) {
                 Object value = table.getContainerProperty(itemId, columnId).getValue();
-
                 return ((UzytkownikZablokowanyEnum) value).getDescription();
             }
             return null;

@@ -1,4 +1,4 @@
-package pl.com.redpike.bankred.util;
+package pl.com.redpike.bankred.util.components;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.HorizontalLayout;

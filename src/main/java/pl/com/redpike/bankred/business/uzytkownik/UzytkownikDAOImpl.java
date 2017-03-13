@@ -35,6 +35,18 @@ public class UzytkownikDAOImpl implements UzytkownikDAO {
     }
 
     @Override
+    public void addUzytkownik(Uzytkownik uzytkownik) {
+        em.persist(uzytkownik);
+        em.flush();
+    }
+
+    @Override
+    public void editUzytkownik(Uzytkownik uzytkownik) {
+        em.merge(uzytkownik);
+        em.flush();
+    }
+
+    @Override
     public void removeUzytkownik(Uzytkownik uzytkownik) {
         uzytkownik = em.getReference(Uzytkownik.class, uzytkownik.getId());
         em.remove(uzytkownik);

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * Created by rs3 on 21.02.2017.
  */
 @Entity
-@SequenceGenerator(name = "uzytkownik_seq", sequenceName = "uzytkownik_seq")
+@SequenceGenerator(name = "uzytkownik_seq", sequenceName = "uzytkownik_seq", initialValue = 8, allocationSize = 1)
 @Table(name = "uzytkownik", schema = "bank")
 public class Uzytkownik {
 
@@ -25,7 +25,7 @@ public class Uzytkownik {
 
     @NotNull
     @Size(min = 3, max = 3)
-    @Column(name = "nazwa", length = 3, nullable = false)
+    @Column(name = "nazwa", length = 3, nullable = false, unique = true)
     private String nazwa;
 
     @NotNull
@@ -41,7 +41,7 @@ public class Uzytkownik {
     @Column(name = "nazwisko", length = 80)
     private String nazwisko;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "rola")
     private Rola rola;
 
