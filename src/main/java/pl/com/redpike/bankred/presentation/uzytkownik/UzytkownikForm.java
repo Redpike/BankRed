@@ -77,7 +77,7 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
         rolaComboBox = new ComboBox();
         rolaComboBox.setCaption("Rola");
         rolaComboBox.setNullSelectionAllowed(false);
-        List<Rola> rolaList = uzytkownikAddEditWindow.getUzytkownikView().getUzytkownikAddEditWindowPresenter().getRoles();
+        List<Rola> rolaList = uzytkownikAddEditWindow.getUzytkownikView().getUzytkownikWindowPresenter().getRoles();
         rolaComboBox.addItems(rolaList);
         rolaComboBox.setValue(rolaList.iterator().next());
         rolaList.forEach(rola -> rolaComboBox.setItemCaption(rola, rola.getNazwa()));

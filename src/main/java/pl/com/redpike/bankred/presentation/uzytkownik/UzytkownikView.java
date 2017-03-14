@@ -4,7 +4,7 @@ import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import pl.com.redpike.bankred.control.uzytkownik.UzytkownikAddEditWindowPresenter;
+import pl.com.redpike.bankred.control.uzytkownik.UzytkownikWindowPresenter;
 import pl.com.redpike.bankred.control.uzytkownik.UzytkownikPresenter;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +22,7 @@ public class UzytkownikView extends CustomComponent implements View {
     private UzytkownikPresenter uzytkownikPresenter;
 
     @Inject
-    private UzytkownikAddEditWindowPresenter uzytkownikAddEditWindowPresenter;
+    private UzytkownikWindowPresenter uzytkownikWindowPresenter;
 
     @PostConstruct
     private void init() {
@@ -30,7 +30,7 @@ public class UzytkownikView extends CustomComponent implements View {
     }
 
     private void buildLayout() {
-        setCompositionRoot(new UzytkownikPage(this));
+        setCompositionRoot(new UzytkownikPage(uzytkownikPresenter, this));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UzytkownikView extends CustomComponent implements View {
         return uzytkownikPresenter;
     }
 
-    public UzytkownikAddEditWindowPresenter getUzytkownikAddEditWindowPresenter() {
-        return uzytkownikAddEditWindowPresenter;
+    public UzytkownikWindowPresenter getUzytkownikWindowPresenter() {
+        return uzytkownikWindowPresenter;
     }
 }

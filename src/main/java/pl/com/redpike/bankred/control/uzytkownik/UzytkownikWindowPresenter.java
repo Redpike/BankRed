@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Redpike
  */
-public class UzytkownikAddEditWindowPresenter {
+public class UzytkownikWindowPresenter {
 
     @Inject
     private RolaDAO rolaDAO;

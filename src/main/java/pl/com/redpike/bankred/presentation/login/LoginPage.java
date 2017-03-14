@@ -4,13 +4,13 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MPasswordField;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
-import pl.com.redpike.bankred.control.uzytkownik.InvalidLoginDataException;
 import pl.com.redpike.bankred.security.PasswordProvider;
 
 import javax.ejb.EJBException;
@@ -43,10 +43,10 @@ public class LoginPage extends VerticalLayout {
         loginLayout = new MVerticalLayout();
         panel = new Panel("Panel logowania");
         usernameField = new MTextField("Nazwa użytkownika").withWidth(300, Unit.PIXELS)
-                .withValidator(new StringLengthValidator("Niepoprawna wartość pola, wymagana liczba znaków - 3", 0, 3, false));
+                .withValidator(new StringLengthValidator("Niepoprawna wartość pola, wymagana liczba znaków - 3", 3, 3, false));
         passwordField = new MPasswordField("Hasło").withWidth(300, Unit.PIXELS)
-                .withValidator(new StringLengthValidator("Niepoprawna wartość pola", 0, 80, false));
-        loginButton = new MButton(FontAwesome.SIGN_IN).withCaption("Zaloguj");
+                .withValidator(new StringLengthValidator("Niepoprawna wartość pola", 1, 80, false));
+        loginButton = new MButton(FontAwesome.SIGN_IN).withCaption("Zaloguj").withStyleName(ValoTheme.BUTTON_SMALL);
         loginButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         setSizeFull();
@@ -76,9 +76,10 @@ public class LoginPage extends VerticalLayout {
                     loginView.getPresenter().onLoginButtonPressed(uzytkownik.getImie(), uzytkownik.getNazwisko());
                 else if (uzytkownik != null && uzytkownik.getZablokowany().getDatabaseValue().equalsIgnoreCase(UzytkownikZablokowanyEnum.TAK_LOW.getDatabaseValue()))
                     Notification.show("Użytkownik " + usernameField.getValue() + " jest zablokowany. Skontaktuj się z administratorem.", Notification.Type.WARNING_MESSAGE);
-            } catch (InvalidLoginDataException | NoSuchAlgorithmException e) {
+                else
+                    Notification.show(BLEDNE_DANE_LOGOWANIA, Notification.Type.ERROR_MESSAGE);
+            } catch (EJBException | NoSuchAlgorithmException e) {
                 Notification.show(BLEDNE_DANE_LOGOWANIA, Notification.Type.ERROR_MESSAGE);
-                throw new InvalidLoginDataException(BLEDNE_DANE_LOGOWANIA);
             }
         });
     }

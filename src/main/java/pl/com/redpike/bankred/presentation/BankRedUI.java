@@ -1,5 +1,6 @@
 package pl.com.redpike.bankred.presentation;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.cdi.CDIUI;
@@ -14,6 +15,7 @@ import org.vaadin.teemusa.sidemenu.SideMenu;
 import pl.com.redpike.bankred.control.login.LoggedUserEvent;
 import pl.com.redpike.bankred.presentation.home.HomeView;
 import pl.com.redpike.bankred.presentation.login.LoginView;
+import pl.com.redpike.bankred.presentation.rola.RolaView;
 import pl.com.redpike.bankred.presentation.uzytkownik.UzytkownikView;
 
 import javax.enterprise.event.Observes;
@@ -25,6 +27,7 @@ import javax.inject.Inject;
 @CDIUI("")
 @Title("BankRed")
 @Theme("bankred")
+@PreserveOnRefresh
 public class BankRedUI extends UI {
 
     @Inject
@@ -57,7 +60,9 @@ public class BankRedUI extends UI {
         setUser(event);
         sideMenu.removeAllComponents();
         sideMenu.addNavigation("Użytkownicy", FontAwesome.USERS, UzytkownikView.VIEW_ID);
+        sideMenu.addNavigation("Role", FontAwesome.USER_MD, RolaView.VIEW_ID);
         navigator.addView(UzytkownikView.VIEW_ID, UzytkownikView.class);
+        navigator.addView(RolaView.VIEW_ID, RolaView.class);
         navigator.navigateTo(HomeView.VIEW_ID);
     }
 

@@ -10,4 +10,10 @@ import java.util.List;
 public interface RolaDAO {
 
     List<Rola> findAll();
+
+    void addRola(Rola rola);
+
+    void editRola(Rola rola);
+
+    void removeRola(Rola rola);
 }

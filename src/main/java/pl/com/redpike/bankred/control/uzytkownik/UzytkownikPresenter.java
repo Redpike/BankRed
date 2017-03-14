@@ -2,6 +2,8 @@ package pl.com.redpike.bankred.control.uzytkownik;
 
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
 import pl.com.redpike.bankred.business.uzytkownik.UzytkownikDAO;
+import pl.com.redpike.bankred.presentation.components.presenters.AbstractPresenter;
+import pl.com.redpike.bankred.presentation.uzytkownik.UzytkownikPage;
 
 import javax.ejb.EJBException;
 import javax.inject.Inject;
@@ -11,7 +13,7 @@ import java.util.Objects;
 /**
  * Created by Redpike
  */
-public class UzytkownikPresenter {
+public class UzytkownikPresenter extends AbstractPresenter<UzytkownikPage> {
 
     @Inject
     private UzytkownikDAO uzytkownikDAO;

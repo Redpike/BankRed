@@ -3,6 +3,7 @@ package pl.com.redpike.bankred.presentation.uzytkownik;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -46,10 +47,10 @@ public class UzytkownikAddEditWindow extends Window {
         uzytkownikForm = new UzytkownikForm(this);
 
         zapiszButton = new MButton("Zapisz")
-                .withIcon(FontAwesome.FLOPPY_O);
+                .withIcon(FontAwesome.FLOPPY_O).withStyleName(ValoTheme.BUTTON_SMALL);
 
         anulujButton = new MButton("Anuluj")
-                .withIcon(FontAwesome.UNDO);
+                .withIcon(FontAwesome.UNDO).withStyleName(ValoTheme.BUTTON_SMALL);
 
         buttonLayout = new MHorizontalLayout()
                 .with(zapiszButton, anulujButton)

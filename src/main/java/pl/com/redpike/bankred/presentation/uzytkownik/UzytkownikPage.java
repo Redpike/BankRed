@@ -2,28 +2,32 @@ package pl.com.redpike.bankred.presentation.uzytkownik;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
-import pl.com.redpike.bankred.util.components.CRUDButtonLayout;
+import pl.com.redpike.bankred.control.uzytkownik.UzytkownikPresenter;
+import pl.com.redpike.bankred.presentation.components.CRUDButtonLayout;
+import pl.com.redpike.bankred.presentation.components.views.AbstractView;
 import pl.com.redpike.bankred.util.properties.UzytkownikPropertyUtil;
 
 /**
  * Created by Redpike
  */
-public class UzytkownikPage extends Panel {
+public class UzytkownikPage extends AbstractView<UzytkownikPresenter> {
 
+    private UzytkownikPresenter uzytkownikPresenter;
     private UzytkownikView uzytkownikView;
+
     private MVerticalLayout verticalLayout;
     private CRUDButtonLayout crudButtonLayout;
     private MTable<Uzytkownik> table;
     private UzytkownikAddEditWindow uzytkownikAddEditWindow;
 
-    public UzytkownikPage(UzytkownikView uzytkownikView) {
+    public UzytkownikPage(UzytkownikPresenter uzytkownikPresenter, UzytkownikView uzytkownikView) {
+        super(uzytkownikPresenter);
         this.uzytkownikView = uzytkownikView;
 
         initComponents();
@@ -66,9 +70,11 @@ public class UzytkownikPage extends Panel {
             Uzytkownik uzytkownik = table.getValue();
 
             ConfirmDialog.show(getUI(), "Usuwanie użytkownika", "Czy na pewno chcesz usunąć użytkownika " + uzytkownik.getNazwa(), "Tak", "Anuluj", confirmDialog -> {
-                uzytkownikView.getUzytkownikPresenter().removeUzytkownik(uzytkownik);
-                refreshTable();
-                Notification.show("Uzytkownik " + uzytkownik.getNazwa() + " został usunięty", Notification.Type.TRAY_NOTIFICATION);
+                if (confirmDialog.isConfirmed()) {
+                    uzytkownikView.getUzytkownikPresenter().removeUzytkownik(uzytkownik);
+                    refreshTable();
+                    Notification.show("Uzytkownik " + uzytkownik.getNazwa() + " został usunięty", Notification.Type.TRAY_NOTIFICATION);
+                }
             });
         });
 
@@ -122,5 +128,10 @@ public class UzytkownikPage extends Panel {
             }
             return null;
         });
+    }
+
+    @Override
+    public UzytkownikPresenter getPresenter() {
+        return uzytkownikPresenter;
     }
 }

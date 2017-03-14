@@ -1,8 +1,9 @@
-package pl.com.redpike.bankred.util.components;
+package pl.com.redpike.bankred.presentation.components;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -23,13 +24,12 @@ public class CRUDButtonLayout extends HorizontalLayout {
     }
 
     private void initComponents() {
-        addButton = new MButton("Dodaj").withIcon(FontAwesome.PLUS_SQUARE_O);
-        editButton = new MButton("Edytuj").withIcon(FontAwesome.EDIT);
-        deleteButton = new MButton("Usuń").withIcon(FontAwesome.TRASH_O);
+        addButton = new MButton("Dodaj").withIcon(FontAwesome.PLUS_SQUARE_O).withStyleName(ValoTheme.BUTTON_SMALL);
+        editButton = new MButton("Edytuj").withIcon(FontAwesome.EDIT).withStyleName(ValoTheme.BUTTON_SMALL);
+        deleteButton = new MButton("Usuń").withIcon(FontAwesome.TRASH_O).withStyleName(ValoTheme.BUTTON_SMALL);
 
         layout = new MHorizontalLayout(addButton, editButton, deleteButton);
-        panel = new Panel(" Akcje");
-        panel.setIcon(FontAwesome.USER);
+        panel = new Panel("Akcje");
         panel.setCaption( "Akcje");
     }
 
