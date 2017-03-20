@@ -3,6 +3,7 @@ package pl.com.redpike.bankred.business.uzytkownik;
 import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyConverter;
 import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
 import pl.com.redpike.bankred.business.rola.Rola;
+import pl.com.redpike.bankred.util.properties.BankRedProperites;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @SequenceGenerator(name = "uzytkownik_seq", sequenceName = "uzytkownik_seq", initialValue = 8, allocationSize = 1)
-@Table(name = "uzytkownik", schema = "bank")
+@Table(name = "uzytkownik", schema = BankRedProperites.BANKRED_SCHEMA)
 public class Uzytkownik {
 
     @Id

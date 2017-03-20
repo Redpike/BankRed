@@ -4,7 +4,9 @@ import com.vaadin.cdi.CDIView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CustomComponent;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +14,7 @@ import javax.annotation.PostConstruct;
  * Created by rs3 on 22.02.2017.
  */
 @CDIView(HomeView.VIEW_ID)
+@ViewMenuItem(title = "Pulpit", order = 0, icon = FontAwesome.BANK)
 public class HomeView extends CustomComponent implements View {
 
     public static final String VIEW_ID = "home";

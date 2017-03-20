@@ -1,4 +1,4 @@
-package pl.com.redpike.bankred.business.rola;
+package pl.com.redpike.bankred.business.uprawnienie;
 
 import pl.com.redpike.bankred.util.properties.BankRedProperites;
 
@@ -11,14 +11,14 @@ import java.math.BigDecimal;
  * Created by Redpike
  */
 @Entity
-@SequenceGenerator(name = "rola_seq", sequenceName = "rola_seq", allocationSize = 1)
-@Table(name = "rola", schema = BankRedProperites.BANKRED_SCHEMA)
-public class Rola {
+@SequenceGenerator(name = "uprawnienie_seq", sequenceName = "uprawnienie_seq", allocationSize = 1)
+@Table(name = "uprawnienie", schema = BankRedProperites.BANKRED_SCHEMA)
+public class Uprawnienie {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rola_seq")
-    @Column(name = "rola_id", precision = 3, nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uprawnienie_seq")
+    @Column(name = "uprawnienie_id", precision = 3, nullable = false, unique = true)
     private BigDecimal id;
 
     @Size(max = 30)
@@ -46,10 +46,10 @@ public class Rola {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Rola rola = (Rola) o;
+        Uprawnienie that = (Uprawnienie) o;
 
-        if (id != null ? !id.equals(rola.id) : rola.id != null) return false;
-        return nazwa != null ? nazwa.equals(rola.nazwa) : rola.nazwa == null;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return nazwa != null ? nazwa.equals(that.nazwa) : that.nazwa == null;
     }
 
     @Override

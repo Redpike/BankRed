@@ -15,26 +15,28 @@ import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
 public class UzytkownikAddEditWindow extends Window {
 
     private final UzytkownikView uzytkownikView;
+    private Uzytkownik uzytkownik;
 
     private UzytkownikForm uzytkownikForm;
     private VerticalLayout mainLayout;
     private HorizontalLayout buttonLayout;
     private Button zapiszButton;
     private Button anulujButton;
+    private Button.ClickListener addListener;
+    private Button.ClickListener editListener;
 
     public UzytkownikAddEditWindow(UzytkownikView uzytkownikView) {
         this.uzytkownikView = uzytkownikView;
 
         initWindow();
         initComponents();
-        initLayout();
         addListeners();
 
         setContent(mainLayout);
     }
 
     private void initWindow() {
-        setCaption(" Dodaj/Edytuj użytkownika");
+        setCaption(" Dodaj użytkownika");
         setIcon(FontAwesome.USER);
         setModal(true);
         setResizable(false);
@@ -68,27 +70,46 @@ public class UzytkownikAddEditWindow extends Window {
                 .withAlign(buttonLayout, Alignment.BOTTOM_CENTER);
     }
 
-    private void initLayout() {
-
+    private void addListeners() {
+        createAddListener();
+        createEditListener();
+        zapiszButton.addClickListener(addListener);
+        anulujButton.addClickListener(event -> close());
     }
 
-    private void addListeners() {
-        zapiszButton.addClickListener(event -> {
+    private void createAddListener() {
+        addListener = event -> {
             if (uzytkownikForm.isValid()) {
                 Uzytkownik uzytkownik = uzytkownikForm.getEntity();
                 uzytkownikView.getUzytkownikPresenter().addUzytkownik(uzytkownik);
+                uzytkownikView.getUzytkownikPresenter().getView().refreshTable();
                 Notification.show("Zapisano użytkownika " + uzytkownik.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
-                Notification.show("Niepoprawne dane formuularza", Notification.Type.ERROR_MESSAGE);
-        });
+                Notification.show("Niepoprawne dane formularza", Notification.Type.ERROR_MESSAGE);
+        };
+    }
 
-        anulujButton.addClickListener(event -> close());
+    private void createEditListener() {
+        editListener = event -> {
+            if (uzytkownikForm.isValid()) {
+                Uzytkownik uzytkownik = uzytkownikForm.getEntity();
+                uzytkownikView.getUzytkownikPresenter().editUzytkownik(uzytkownik);
+                uzytkownikView.getUzytkownikPresenter().getView().refreshTable();
+                Notification.show("Zapisano użytkownika " + uzytkownik.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
+                close();
+            } else
+                Notification.show("Niepoprawne dane formularza", Notification.Type.ERROR_MESSAGE);
+        };
     }
 
     public void openForSelectedUzytkownik(Uzytkownik uzytkownik) {
         UI.getCurrent().addWindow(this);
-        uzytkownikForm.setSelectedUzytkownik(uzytkownik);
+        setCaption(" Edytuj użytkownika");
+        this.uzytkownik = uzytkownik;
+        zapiszButton.removeClickListener(addListener);
+        zapiszButton.addClickListener(editListener);
+        uzytkownikForm.setSelectedUzytkownik(this.uzytkownik);
     }
 
     public UzytkownikView getUzytkownikView() {

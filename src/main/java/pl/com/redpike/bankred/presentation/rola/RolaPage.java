@@ -39,7 +39,7 @@ public class RolaPage extends AbstractView<RolaPresenter> {
         crudButtonLayout.getEditButton().setEnabled(false);
         crudButtonLayout.getDeleteButton().setEnabled(false);
 
-        initUzytkownikTable();
+        initRolaTable();
         verticalLayout = new MVerticalLayout()
                 .withMargin(true)
                 .withSpacing(true)
@@ -72,7 +72,7 @@ public class RolaPage extends AbstractView<RolaPresenter> {
                 if (confirmDialog.isConfirmed()) {
                     rolaView.getRolaPresenter().removeRola(rola);
                     refreshTable();
-                    Notification.show("Uzytkownik " + rola.getNazwa() + " został usunięty", Notification.Type.TRAY_NOTIFICATION);
+                    Notification.show("Rola " + rola.getNazwa() + " została usunięta", Notification.Type.TRAY_NOTIFICATION);
                 }
             });
         });
@@ -93,7 +93,7 @@ public class RolaPage extends AbstractView<RolaPresenter> {
         table.setBeans(rolaView.getRolaPresenter().getAllRole());
     }
 
-    private void initUzytkownikTable() {
+    private void initRolaTable() {
         table = new MTable<>(Rola.class);
         table.setSelectable(true);
         table.setImmediate(true);

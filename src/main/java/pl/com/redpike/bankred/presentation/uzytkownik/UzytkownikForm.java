@@ -1,5 +1,6 @@
 package pl.com.redpike.bankred.presentation.uzytkownik;
 
+import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.UserError;
@@ -22,8 +23,10 @@ import java.util.List;
 public class UzytkownikForm extends AbstractForm<Uzytkownik> {
 
     private final UzytkownikAddEditWindow uzytkownikAddEditWindow;
+    private Uzytkownik uzytkownik;
     private FormLayout formLayout;
     private PasswordField confirmPasswordField;
+    private Property.ValueChangeListener valueChangeListener;
 
     @PropertyId(UzytkownikPropertyUtil.NAZWA)
     private TextField usernameField;
@@ -53,8 +56,8 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
     }
 
     private void initComponents() {
+        uzytkownik = new Uzytkownik();
         usernameField = new MTextField("Nazwa użytkownika");
-
         passwordField = new MPasswordField("Hasło");
         confirmPasswordField = new MPasswordField("Powtórz hasło");
         imieField = new MTextField("Imię");
@@ -101,14 +104,16 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
 
     private void addListeners() {
         List<Uzytkownik> uzytkownikList = uzytkownikAddEditWindow.getUzytkownikView().getUzytkownikPresenter().getAllUzytkownicy();
-        usernameField.addValueChangeListener(event -> {
-            //TODO Zrobic sprawdzenie czy nazwa uzytkownika juz istnieje
+
+        valueChangeListener = (Property.ValueChangeListener) valueChangeEvent -> {
             usernameField.setComponentError(null);
             uzytkownikList.forEach(uzytkownik -> {
                 if (uzytkownik.getNazwa().equals(usernameField.getValue()))
                     usernameField.setComponentError(new UserError("Podana nazwa użytkownika już istnieje"));
             });
-        });
+        };
+
+        usernameField.addValueChangeListener(valueChangeListener);
 
         confirmPasswordField.addValueChangeListener(event -> {
             if (confirmPasswordField.getValue() != null && !confirmPasswordField.getValue().equals(passwordField.getValue())) {
@@ -130,6 +135,8 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
     }
 
     public void setSelectedUzytkownik(Uzytkownik uzytkownik) {
+        this.uzytkownik = uzytkownik;
+        usernameField.removeValueChangeListener(valueChangeListener);
         usernameField.setValue(uzytkownik.getNazwa());
         usernameField.setEnabled(false);
         imieField.setValue(uzytkownik.getImie());
@@ -156,7 +163,6 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
     }
 
     private Uzytkownik createUzytkownik() throws NoSuchAlgorithmException {
-        Uzytkownik uzytkownik = new Uzytkownik();
         uzytkownik.setNazwa(usernameField.getValue());
         uzytkownik.setHaslo(PasswordProvider.hashPassword(passwordField.getValue()));
         uzytkownik.setImie(imieField.getValue());

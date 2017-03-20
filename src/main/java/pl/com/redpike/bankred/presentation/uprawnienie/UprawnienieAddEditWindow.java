@@ -1,4 +1,4 @@
-package pl.com.redpike.bankred.presentation.rola;
+package pl.com.redpike.bankred.presentation.uprawnienie;
 
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
@@ -7,17 +7,17 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import pl.com.redpike.bankred.business.rola.Rola;
+import pl.com.redpike.bankred.business.uprawnienie.Uprawnienie;
 
 /**
- * Created by rs3 on 14.03.2017.
+ * Created by Redpike
  */
-public class RolaAddEditWindow extends Window {
+public class UprawnienieAddEditWindow extends Window {
 
-    private final RolaView rolaView;
-    private Rola rola;
+    private final UprawnienieView uprawnienieView;
+    private Uprawnienie uprawnienie;
 
-    private RolaForm rolaForm;
+    private UprawnienieForm uprawnienieForm;
     private VerticalLayout mainLayout;
     private HorizontalLayout buttonLayout;
     private Button zapiszButton;
@@ -25,8 +25,8 @@ public class RolaAddEditWindow extends Window {
     private Button.ClickListener addListener;
     private Button.ClickListener editListener;
 
-    public RolaAddEditWindow(RolaView rolaView) {
-        this.rolaView = rolaView;
+    public UprawnienieAddEditWindow(UprawnienieView uprawnienieView) {
+        this.uprawnienieView = uprawnienieView;
 
         initWindow();
         initComponents();
@@ -36,17 +36,17 @@ public class RolaAddEditWindow extends Window {
     }
 
     private void initWindow() {
-        setCaption(" Dodaj rolę");
-        setIcon(FontAwesome.USER_MD);
+        setCaption(" Dodaj uprawnienie");
+        setIcon(FontAwesome.KEY);
         setModal(true);
         setResizable(false);
         setCloseShortcut(ShortcutAction.KeyCode.ESCAPE);
         setHeight(200, Unit.PIXELS);
-        setWidth(410, Unit.PIXELS);
+        setWidth(450, Unit.PIXELS);
     }
 
     private void initComponents() {
-        rolaForm = new RolaForm(this);
+        uprawnienieForm = new UprawnienieForm(this);
 
         zapiszButton = new MButton("Zapisz")
                 .withIcon(FontAwesome.FLOPPY_O).withStyleName(ValoTheme.BUTTON_SMALL);
@@ -62,7 +62,7 @@ public class RolaAddEditWindow extends Window {
                 .withAlign(anulujButton, Alignment.BOTTOM_RIGHT);
 
         mainLayout = new MVerticalLayout()
-                .with(rolaForm, buttonLayout)
+                .with(uprawnienieForm, buttonLayout)
                 .withSpacing(true)
                 .withMargin(true)
                 .withFullWidth()
@@ -79,11 +79,11 @@ public class RolaAddEditWindow extends Window {
 
     private void createAddListener() {
         addListener = event -> {
-            if (rolaForm.isValid()) {
-                Rola rola = rolaForm.getEntity();
-                rolaView.getRolaPresenter().addRola(rola);
-                rolaView.getRolaPresenter().getView().refreshTable();
-                Notification.show("Zapisano rolę " + rola.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
+            if (uprawnienieForm.isValid()) {
+                Uprawnienie uprawnienie = uprawnienieForm.getEntity();
+                uprawnienieView.getUprawnieniePresenter().addUprawnienie(uprawnienie);
+                uprawnienieView.getUprawnieniePresenter().getView().getUprawnieniePage().refreshTable();
+                Notification.show("Zapisano uprawnienie " + uprawnienie.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
                 Notification.show("Niepoprawne dane formularza", Notification.Type.ERROR_MESSAGE);
@@ -92,23 +92,27 @@ public class RolaAddEditWindow extends Window {
 
     private void createEditListener() {
         editListener = event -> {
-            if (rolaForm.isValid()) {
-                Rola rola = rolaForm.getEntity();
-                rolaView.getRolaPresenter().editRola(rola);
-                rolaView.getRolaPresenter().getView().refreshTable();
-                Notification.show("Zapisano rolę " + rola.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
+            if (uprawnienieForm.isValid()) {
+                Uprawnienie uprawnienie = uprawnienieForm.getEntity();
+                uprawnienieView.getUprawnieniePresenter().editUprawnienie(uprawnienie);
+                uprawnienieView.getUprawnieniePresenter().getView().getUprawnieniePage().refreshTable();
+                Notification.show("Zapisano uprawnienie " + uprawnienie.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
                 Notification.show("Niepoprawne dane formularza", Notification.Type.ERROR_MESSAGE);
         };
     }
 
-    public void openForSelectedRola(Rola rola) {
+    public void openForSelectedUzytkownik(Uprawnienie uprawnienie) {
         UI.getCurrent().addWindow(this);
-        setCaption(" Edytuj rolę");
-        this.rola = rola;
+        setCaption(" Edytuj uprawnienie");
+        this.uprawnienie = uprawnienie;
         zapiszButton.removeClickListener(addListener);
         zapiszButton.addClickListener(editListener);
-        rolaForm.setSelectedRola(this.rola);
+        uprawnienieForm.setSelectedUprawnienie(this.uprawnienie);
+    }
+
+    public UprawnienieView getUprawnienieView() {
+        return uprawnienieView;
     }
 }

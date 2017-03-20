@@ -31,7 +31,6 @@
         <popupbutton.version>2.5.0</popupbutton.version>
         <viritin.version>1.47</viritin.version>
         <cdi-helpers.version>1.14</cdi-helpers.version>
-        <vaadin-sidemenu.version>1.0</vaadin-sidemenu.version>
         <vaadin.widgetset.mode>local</vaadin.widgetset.mode>
         <vaadin.theme>bankred</vaadin.theme>
 
@@ -351,12 +350,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.vaadin.teemusa</groupId>
-            <artifactId>sidemenu</artifactId>
-            <version>${vaadin-sidemenu.version}</version>
-        </dependency>
-
         <!-- SERVLET API -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -385,6 +378,20 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
             <scope>provided</scope>
         </dependency>
 

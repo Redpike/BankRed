@@ -1,5 +1,7 @@
 package pl.com.redpike.bankred.business.uzytkownik;
 
+import pl.com.redpike.bankred.util.properties.BankRedProperites;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +13,7 @@ import java.util.List;
 @Stateless
 public class UzytkownikDAOImpl implements UzytkownikDAO {
 
-    @PersistenceContext(unitName = "bankPU")
+    @PersistenceContext(unitName = BankRedProperites.BANKRED_PU)
     private EntityManager em;
 
     @Override
