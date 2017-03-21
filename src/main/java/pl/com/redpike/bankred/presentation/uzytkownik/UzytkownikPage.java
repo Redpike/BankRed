@@ -1,137 +1,51 @@
 package pl.com.redpike.bankred.presentation.uzytkownik;
 
+import com.vaadin.cdi.CDIView;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.viritin.fields.MTable;
-import org.vaadin.viritin.layouts.MVerticalLayout;
-import pl.com.redpike.bankred.business.enums.UzytkownikZablokowanyEnum;
-import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
+import com.vaadin.ui.CustomComponent;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
+import pl.com.redpike.bankred.control.uzytkownik.UzytkownikWindowPresenter;
 import pl.com.redpike.bankred.control.uzytkownik.UzytkownikPresenter;
-import pl.com.redpike.bankred.presentation.components.CRUDButtonLayout;
-import pl.com.redpike.bankred.presentation.components.views.AbstractView;
-import pl.com.redpike.bankred.util.properties.UzytkownikPropertyUtil;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
- * Created by Redpike
+ * Created by rs3 on 22.02.2017.
  */
-public class UzytkownikPage extends AbstractView<UzytkownikPresenter> {
+@CDIView(UzytkownikPage.VIEW_ID)
+@ViewMenuItem(title = "Uzytkownicy", order = 1, icon = FontAwesome.USERS)
+public class UzytkownikPage extends CustomComponent implements View {
 
+    public static final String VIEW_ID = "uzytkownik";
+
+    @Inject
     private UzytkownikPresenter uzytkownikPresenter;
-    private UzytkownikView uzytkownikView;
 
-    private MVerticalLayout verticalLayout;
-    private CRUDButtonLayout crudButtonLayout;
-    private MTable<Uzytkownik> table;
-    private UzytkownikAddEditWindow uzytkownikAddEditWindow;
+    @Inject
+    private UzytkownikWindowPresenter uzytkownikWindowPresenter;
 
-    public UzytkownikPage(UzytkownikPresenter uzytkownikPresenter, UzytkownikView uzytkownikView) {
-        super(uzytkownikPresenter);
-        this.uzytkownikView = uzytkownikView;
-
-        initComponents();
-        initLayout();
-        addListeners();
+    @PostConstruct
+    private void init() {
+        buildLayout();
     }
 
-    private void initComponents() {
-        crudButtonLayout = new CRUDButtonLayout();
-        crudButtonLayout.getEditButton().setEnabled(false);
-        crudButtonLayout.getDeleteButton().setEnabled(false);
-
-        initUzytkownikTable();
-        verticalLayout = new MVerticalLayout()
-                .withMargin(true)
-                .withSpacing(true)
-                .withFullWidth()
-                .with(crudButtonLayout, table);
-    }
-
-    private void initLayout() {
-        setCaption(" Użytkownicy");
-        setIcon(FontAwesome.USERS);
-        setSizeFull();
-        setContent(verticalLayout);
-    }
-
-    private void addListeners() {
-        crudButtonLayout.getAddButton().addClickListener(clickEvent -> {
-            uzytkownikAddEditWindow = new UzytkownikAddEditWindow(uzytkownikView);
-            getUI().addWindow(uzytkownikAddEditWindow);
-        });
-
-        crudButtonLayout.getEditButton().addClickListener(clickEvent -> {
-            uzytkownikAddEditWindow = new UzytkownikAddEditWindow(uzytkownikView);
-            uzytkownikAddEditWindow.openForSelectedUzytkownik(table.getValue());
-        });
-
-        crudButtonLayout.getDeleteButton().addClickListener(clickEvent -> {
-            Uzytkownik uzytkownik = table.getValue();
-
-            ConfirmDialog.show(getUI(), "Usuwanie użytkownika", "Czy na pewno chcesz usunąć użytkownika " + uzytkownik.getNazwa(), "Tak", "Anuluj", confirmDialog -> {
-                if (confirmDialog.isConfirmed()) {
-                    uzytkownikView.getUzytkownikPresenter().removeUzytkownik(uzytkownik);
-                    refreshTable();
-                    Notification.show("Uzytkownik " + uzytkownik.getNazwa() + " został usunięty", Notification.Type.TRAY_NOTIFICATION);
-                }
-            });
-        });
-
-        table.addValueChangeListener(event -> {
-            if (event.getProperty().getValue() != null) {
-                crudButtonLayout.getEditButton().setEnabled(true);
-                crudButtonLayout.getDeleteButton().setEnabled(true);
-            } else {
-                crudButtonLayout.getEditButton().setEnabled(false);
-                crudButtonLayout.getDeleteButton().setEnabled(false);
-            }
-        });
-    }
-
-    public void refreshTable() {
-        table.getContainerDataSource().removeAllItems();
-        table.setBeans(uzytkownikView.getUzytkownikPresenter().getAllUzytkownicy());
-    }
-
-    private void initUzytkownikTable() {
-        table = new MTable<>(Uzytkownik.class);
-        table.setSelectable(true);
-        table.setImmediate(true);
-        table.setSizeFull();
-        table.setVisibleColumns(
-                UzytkownikPropertyUtil.NAZWA,
-                UzytkownikPropertyUtil.IMIE,
-                UzytkownikPropertyUtil.NAZWISKO,
-                UzytkownikPropertyUtil.ROLA,
-                UzytkownikPropertyUtil.ZABLOKOWANY
-        );
-
-        setTableHeaders();
-        addColumnConverter();
-        refreshTable();
-    }
-
-    private void setTableHeaders() {
-        table.setColumnHeader(UzytkownikPropertyUtil.NAZWA, UzytkownikPropertyUtil.NAZWA_HEADER);
-        table.setColumnHeader(UzytkownikPropertyUtil.IMIE, UzytkownikPropertyUtil.IMIE_HEADER);
-        table.setColumnHeader(UzytkownikPropertyUtil.NAZWISKO, UzytkownikPropertyUtil.NAZWISKO_HEADER);
-        table.setColumnHeader(UzytkownikPropertyUtil.ROLA, UzytkownikPropertyUtil.ROLA_HEADER);
-        table.setColumnHeader(UzytkownikPropertyUtil.ZABLOKOWANY, UzytkownikPropertyUtil.ZABLOKOWANY_HEADER);
-    }
-
-    private void addColumnConverter() {
-        table.addGeneratedColumn(UzytkownikPropertyUtil.ZABLOKOWANY, (Table.ColumnGenerator) (table, itemId, columnId) -> {
-            if (columnId != null) {
-                Object value = table.getContainerProperty(itemId, columnId).getValue();
-                return ((UzytkownikZablokowanyEnum) value).getDescription();
-            }
-            return null;
-        });
+    private void buildLayout() {
+        setCompositionRoot(new UzytkownikView(uzytkownikPresenter, this));
     }
 
     @Override
-    public UzytkownikPresenter getPresenter() {
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+
+    }
+
+    public UzytkownikPresenter getUzytkownikPresenter() {
         return uzytkownikPresenter;
+    }
+
+    public UzytkownikWindowPresenter getUzytkownikWindowPresenter() {
+        return uzytkownikWindowPresenter;
     }
 }

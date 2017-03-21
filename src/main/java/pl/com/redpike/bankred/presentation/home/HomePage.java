@@ -1,36 +1,41 @@
 package pl.com.redpike.bankred.presentation.home;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
-import org.vaadin.viritin.label.MLabel;
-import org.vaadin.viritin.layouts.MVerticalLayout;
+import com.vaadin.cdi.CDIView;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.CustomComponent;
+import org.vaadin.cdiviewmenu.ViewMenuItem;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by rs3 on 22.02.2017.
  */
-public class HomePage extends VerticalLayout {
+@CDIView(HomePage.VIEW_ID)
+@ViewMenuItem(title = "Pulpit", order = 0, icon = FontAwesome.BANK)
+public class HomePage extends CustomComponent implements View {
 
-    private final HomeView homeView;
+    public static final String VIEW_ID = "home";
 
-    private VerticalLayout layout;
-    private Label label;
+    private Navigator navigator;
 
-    public HomePage(HomeView homeView) {
-        this.homeView = homeView;
-
-        initComponents();
-        initLayout();
+    @PostConstruct
+    private void init() {
+        buildLayout();
     }
 
-    private void initComponents() {
-        label = new MLabel("Witaj w aplikacji bankowej BankRed System");
-
-        layout = new MVerticalLayout(label).withFullWidth().withFullHeight().withSpacing(true).withMargin(true).withAlign(label, Alignment.MIDDLE_CENTER);
+    private void buildLayout() {
+        setCompositionRoot(new HomeView(this));
     }
 
-    private void initLayout() {
-        addComponent(layout);
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        navigator = getUI().getNavigator();
     }
 
+    public Navigator getNavigator() {
+        return navigator;
+    }
 }

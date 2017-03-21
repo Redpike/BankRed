@@ -14,7 +14,7 @@ import pl.com.redpike.bankred.business.uprawnienie.Uprawnienie;
  */
 public class UprawnienieAddEditWindow extends Window {
 
-    private final UprawnienieView uprawnienieView;
+    private final UprawnieniePage uprawnieniePage;
     private Uprawnienie uprawnienie;
 
     private UprawnienieForm uprawnienieForm;
@@ -25,8 +25,8 @@ public class UprawnienieAddEditWindow extends Window {
     private Button.ClickListener addListener;
     private Button.ClickListener editListener;
 
-    public UprawnienieAddEditWindow(UprawnienieView uprawnienieView) {
-        this.uprawnienieView = uprawnienieView;
+    public UprawnienieAddEditWindow(UprawnieniePage uprawnieniePage) {
+        this.uprawnieniePage = uprawnieniePage;
 
         initWindow();
         initComponents();
@@ -81,8 +81,8 @@ public class UprawnienieAddEditWindow extends Window {
         addListener = event -> {
             if (uprawnienieForm.isValid()) {
                 Uprawnienie uprawnienie = uprawnienieForm.getEntity();
-                uprawnienieView.getUprawnieniePresenter().addUprawnienie(uprawnienie);
-                uprawnienieView.getUprawnieniePresenter().getView().getUprawnieniePage().refreshTable();
+                uprawnieniePage.getUprawnieniePresenter().addUprawnienie(uprawnienie);
+                uprawnieniePage.getUprawnieniePresenter().getView().getUprawnienieView().refreshTable();
                 Notification.show("Zapisano uprawnienie " + uprawnienie.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
@@ -94,8 +94,8 @@ public class UprawnienieAddEditWindow extends Window {
         editListener = event -> {
             if (uprawnienieForm.isValid()) {
                 Uprawnienie uprawnienie = uprawnienieForm.getEntity();
-                uprawnienieView.getUprawnieniePresenter().editUprawnienie(uprawnienie);
-                uprawnienieView.getUprawnieniePresenter().getView().getUprawnieniePage().refreshTable();
+                uprawnieniePage.getUprawnieniePresenter().editUprawnienie(uprawnienie);
+                uprawnieniePage.getUprawnieniePresenter().getView().getUprawnienieView().refreshTable();
                 Notification.show("Zapisano uprawnienie " + uprawnienie.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
@@ -112,7 +112,7 @@ public class UprawnienieAddEditWindow extends Window {
         uprawnienieForm.setSelectedUprawnienie(this.uprawnienie);
     }
 
-    public UprawnienieView getUprawnienieView() {
-        return uprawnienieView;
+    public UprawnieniePage getUprawnieniePage() {
+        return uprawnieniePage;
     }
 }

@@ -80,7 +80,7 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
         rolaComboBox = new ComboBox();
         rolaComboBox.setCaption("Rola");
         rolaComboBox.setNullSelectionAllowed(false);
-        List<Rola> rolaList = uzytkownikAddEditWindow.getUzytkownikView().getUzytkownikWindowPresenter().getRoles();
+        List<Rola> rolaList = uzytkownikAddEditWindow.getUzytkownikPage().getUzytkownikWindowPresenter().getRoles();
         rolaComboBox.addItems(rolaList);
         rolaComboBox.setValue(rolaList.iterator().next());
         rolaList.forEach(rola -> rolaComboBox.setItemCaption(rola, rola.getNazwa()));
@@ -103,7 +103,7 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
     }
 
     private void addListeners() {
-        List<Uzytkownik> uzytkownikList = uzytkownikAddEditWindow.getUzytkownikView().getUzytkownikPresenter().getAllUzytkownicy();
+        List<Uzytkownik> uzytkownikList = uzytkownikAddEditWindow.getUzytkownikPage().getUzytkownikPresenter().getAllUzytkownicy();
 
         valueChangeListener = (Property.ValueChangeListener) valueChangeEvent -> {
             usernameField.setComponentError(null);

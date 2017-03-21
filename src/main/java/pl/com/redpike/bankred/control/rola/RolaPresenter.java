@@ -3,7 +3,7 @@ package pl.com.redpike.bankred.control.rola;
 import pl.com.redpike.bankred.business.rola.Rola;
 import pl.com.redpike.bankred.business.rola.RolaDAO;
 import pl.com.redpike.bankred.presentation.components.presenters.AbstractPresenter;
-import pl.com.redpike.bankred.presentation.rola.RolaPage;
+import pl.com.redpike.bankred.presentation.rola.RolaView;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Redpike
  */
-public class RolaPresenter extends AbstractPresenter<RolaPage> {
+public class RolaPresenter extends AbstractPresenter<RolaView> {
 
     @Inject
     private RolaDAO rolaDAO;

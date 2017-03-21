@@ -9,17 +9,17 @@ import pl.com.redpike.bankred.control.uprawnienie.UprawnieniePresenter;
 /**
  * Created by Redpike
  */
-public class UprawnienieRolaPage extends VerticalLayout {
+public class UprawnienieRolaView extends VerticalLayout {
 
     private UprawnieniePresenter uprawnieniePresenter;
-    private UprawnienieView uprawnienieView;
+    private UprawnieniePage uprawnieniePage;
 
     private MVerticalLayout verticalLayout;
     private Label label;
 
-    public UprawnienieRolaPage(UprawnieniePresenter uprawnieniePresenter, UprawnienieView uprawnienieView) {
+    public UprawnienieRolaView(UprawnieniePresenter uprawnieniePresenter, UprawnieniePage uprawnieniePage) {
         this.uprawnieniePresenter = uprawnieniePresenter;
-        this.uprawnienieView = uprawnienieView;
+        this.uprawnieniePage = uprawnieniePage;
 
         initComponents();
         initLayout();

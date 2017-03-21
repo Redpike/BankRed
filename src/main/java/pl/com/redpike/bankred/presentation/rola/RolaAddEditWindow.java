@@ -14,7 +14,7 @@ import pl.com.redpike.bankred.business.rola.Rola;
  */
 public class RolaAddEditWindow extends Window {
 
-    private final RolaView rolaView;
+    private final RolaPage rolaPage;
     private Rola rola;
 
     private RolaForm rolaForm;
@@ -25,8 +25,8 @@ public class RolaAddEditWindow extends Window {
     private Button.ClickListener addListener;
     private Button.ClickListener editListener;
 
-    public RolaAddEditWindow(RolaView rolaView) {
-        this.rolaView = rolaView;
+    public RolaAddEditWindow(RolaPage rolaPage) {
+        this.rolaPage = rolaPage;
 
         initWindow();
         initComponents();
@@ -81,8 +81,8 @@ public class RolaAddEditWindow extends Window {
         addListener = event -> {
             if (rolaForm.isValid()) {
                 Rola rola = rolaForm.getEntity();
-                rolaView.getRolaPresenter().addRola(rola);
-                rolaView.getRolaPresenter().getView().refreshTable();
+                rolaPage.getRolaPresenter().addRola(rola);
+                rolaPage.getRolaPresenter().getView().refreshTable();
                 Notification.show("Zapisano rolę " + rola.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
@@ -94,8 +94,8 @@ public class RolaAddEditWindow extends Window {
         editListener = event -> {
             if (rolaForm.isValid()) {
                 Rola rola = rolaForm.getEntity();
-                rolaView.getRolaPresenter().editRola(rola);
-                rolaView.getRolaPresenter().getView().refreshTable();
+                rolaPage.getRolaPresenter().editRola(rola);
+                rolaPage.getRolaPresenter().getView().refreshTable();
                 Notification.show("Zapisano rolę " + rola.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else

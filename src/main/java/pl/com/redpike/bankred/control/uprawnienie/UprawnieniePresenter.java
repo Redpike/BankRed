@@ -3,7 +3,7 @@ package pl.com.redpike.bankred.control.uprawnienie;
 import pl.com.redpike.bankred.business.uprawnienie.Uprawnienie;
 import pl.com.redpike.bankred.business.uprawnienie.UprawnienieDAO;
 import pl.com.redpike.bankred.presentation.components.presenters.AbstractPresenter;
-import pl.com.redpike.bankred.presentation.uprawnienie.UprawnienieTabPage;
+import pl.com.redpike.bankred.presentation.uprawnienie.UprawnienieTabView;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Redpike
  */
-public class UprawnieniePresenter extends AbstractPresenter<UprawnienieTabPage> {
+public class UprawnieniePresenter extends AbstractPresenter<UprawnienieTabView> {
 
     @Inject
     private UprawnienieDAO uprawnienieDAO;

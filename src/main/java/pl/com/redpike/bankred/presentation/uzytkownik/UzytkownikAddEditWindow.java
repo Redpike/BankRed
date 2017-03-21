@@ -14,7 +14,7 @@ import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
  */
 public class UzytkownikAddEditWindow extends Window {
 
-    private final UzytkownikView uzytkownikView;
+    private final UzytkownikPage uzytkownikPage;
     private Uzytkownik uzytkownik;
 
     private UzytkownikForm uzytkownikForm;
@@ -25,8 +25,8 @@ public class UzytkownikAddEditWindow extends Window {
     private Button.ClickListener addListener;
     private Button.ClickListener editListener;
 
-    public UzytkownikAddEditWindow(UzytkownikView uzytkownikView) {
-        this.uzytkownikView = uzytkownikView;
+    public UzytkownikAddEditWindow(UzytkownikPage uzytkownikPage) {
+        this.uzytkownikPage = uzytkownikPage;
 
         initWindow();
         initComponents();
@@ -81,8 +81,8 @@ public class UzytkownikAddEditWindow extends Window {
         addListener = event -> {
             if (uzytkownikForm.isValid()) {
                 Uzytkownik uzytkownik = uzytkownikForm.getEntity();
-                uzytkownikView.getUzytkownikPresenter().addUzytkownik(uzytkownik);
-                uzytkownikView.getUzytkownikPresenter().getView().refreshTable();
+                uzytkownikPage.getUzytkownikPresenter().addUzytkownik(uzytkownik);
+                uzytkownikPage.getUzytkownikPresenter().getView().refreshTable();
                 Notification.show("Zapisano użytkownika " + uzytkownik.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
@@ -94,8 +94,8 @@ public class UzytkownikAddEditWindow extends Window {
         editListener = event -> {
             if (uzytkownikForm.isValid()) {
                 Uzytkownik uzytkownik = uzytkownikForm.getEntity();
-                uzytkownikView.getUzytkownikPresenter().editUzytkownik(uzytkownik);
-                uzytkownikView.getUzytkownikPresenter().getView().refreshTable();
+                uzytkownikPage.getUzytkownikPresenter().editUzytkownik(uzytkownik);
+                uzytkownikPage.getUzytkownikPresenter().getView().refreshTable();
                 Notification.show("Zapisano użytkownika " + uzytkownik.getNazwa(), Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
@@ -112,7 +112,7 @@ public class UzytkownikAddEditWindow extends Window {
         uzytkownikForm.setSelectedUzytkownik(this.uzytkownik);
     }
 
-    public UzytkownikView getUzytkownikView() {
-        return uzytkownikView;
+    public UzytkownikPage getUzytkownikPage() {
+        return uzytkownikPage;
     }
 }

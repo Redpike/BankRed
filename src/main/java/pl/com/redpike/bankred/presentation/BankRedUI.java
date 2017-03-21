@@ -14,8 +14,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.cdiviewmenu.ViewMenuUI;
 import org.vaadin.viritin.button.MButton;
 import pl.com.redpike.bankred.control.login.LoggedUserEvent;
-import pl.com.redpike.bankred.presentation.home.HomeView;
-import pl.com.redpike.bankred.presentation.login.LoginView;
+import pl.com.redpike.bankred.presentation.home.HomePage;
+import pl.com.redpike.bankred.presentation.login.LoginPage;
 
 import javax.enterprise.event.Observes;
 
@@ -35,14 +35,14 @@ public class BankRedUI extends ViewMenuUI {
         super.init(vaadinRequest);
 
         ViewMenuUI.getMenu().setVisible(false);
-        ViewMenuUI.getMenu().navigateTo(LoginView.VIEW_ID);
+        ViewMenuUI.getMenu().navigateTo(LoginPage.VIEW_ID);
     }
 
     public void userLoggedIn(@Observes LoggedUserEvent event) {
         initLogoutButton();
         ViewMenuUI.getMenu().setVisible(true);
         ViewMenuUI.getMenu().setMenuTitle("BankRed System");
-        ViewMenuUI.getMenu().navigateTo(HomeView.VIEW_ID);
+        ViewMenuUI.getMenu().navigateTo(HomePage.VIEW_ID);
         ViewMenuUI.getMenu().addMenuItem(logoutButton);
         Notification.show("Witaj " + event.getNameAndSurname(), Notification.Type.TRAY_NOTIFICATION);
     }
@@ -54,7 +54,7 @@ public class BankRedUI extends ViewMenuUI {
 
     private void logout() {
         VaadinSession.getCurrent().close();
-        Page.getCurrent().setLocation(LoginView.VIEW_ID);
+        Page.getCurrent().setLocation(LoginPage.VIEW_ID);
         ViewMenuUI.getMenu().setVisible(false);
         Notification.show("Wylogowano", Notification.Type.TRAY_NOTIFICATION);
     }
