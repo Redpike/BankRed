@@ -1,11 +1,13 @@
 package pl.com.redpike.bankred.business.rola;
 
+import pl.com.redpike.bankred.business.uprawnienie.Uprawnienie;
 import pl.com.redpike.bankred.util.properties.BankRedProperites;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * Created by Redpike
@@ -25,6 +27,13 @@ public class Rola {
     @Column(name = "nazwa", length = 30)
     private String nazwa;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "rola_uprawnienie",
+            joinColumns = {@JoinColumn(name = "rola_id")},
+            inverseJoinColumns = {@JoinColumn(name = "uprawnienie_id")}
+    )
+    private Set<Uprawnienie> uprawnienieSet;
+
     public BigDecimal getId() {
         return id;
     }
@@ -41,6 +50,14 @@ public class Rola {
         this.nazwa = nazwa;
     }
 
+    public Set<Uprawnienie> getUprawnienieSet() {
+        return uprawnienieSet;
+    }
+
+    public void setUprawnienieSet(Set<Uprawnienie> uprawnienieSet) {
+        this.uprawnienieSet = uprawnienieSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,13 +66,15 @@ public class Rola {
         Rola rola = (Rola) o;
 
         if (id != null ? !id.equals(rola.id) : rola.id != null) return false;
-        return nazwa != null ? nazwa.equals(rola.nazwa) : rola.nazwa == null;
+        if (nazwa != null ? !nazwa.equals(rola.nazwa) : rola.nazwa != null) return false;
+        return uprawnienieSet != null ? uprawnienieSet.equals(rola.uprawnienieSet) : rola.uprawnienieSet == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (nazwa != null ? nazwa.hashCode() : 0);
+        result = 31 * result + (uprawnienieSet != null ? uprawnienieSet.hashCode() : 0);
         return result;
     }
 
