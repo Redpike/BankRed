@@ -28,6 +28,7 @@ public class UzytkownikView extends AbstractView<UzytkownikPresenter> {
 
     public UzytkownikView(UzytkownikPresenter uzytkownikPresenter, UzytkownikPage uzytkownikPage) {
         super(uzytkownikPresenter);
+        this.uzytkownikPresenter = uzytkownikPresenter;
         this.uzytkownikPage = uzytkownikPage;
 
         initComponents();

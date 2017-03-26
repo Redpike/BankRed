@@ -31,6 +31,7 @@
         <popupbutton.version>2.5.0</popupbutton.version>
         <viritin.version>1.47</viritin.version>
         <cdi-helpers.version>1.14</cdi-helpers.version>
+        <guava.version>19.0</guava.version>
         <vaadin.widgetset.mode>local</vaadin.widgetset.mode>
         <vaadin.theme>bankred</vaadin.theme>
 
@@ -355,6 +356,14 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- GUAVA -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
             <scope>provided</scope>
         </dependency>
 

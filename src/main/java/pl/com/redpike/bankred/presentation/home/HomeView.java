@@ -1,22 +1,35 @@
 package pl.com.redpike.bankred.presentation.home;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.google.common.eventbus.Subscribe;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.label.MLabel;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
+import pl.com.redpike.bankred.control.home.HomePresenter;
+import pl.com.redpike.bankred.presentation.components.views.AbstractView;
 
 /**
  * Created by rs3 on 22.02.2017.
  */
-public class HomeView extends VerticalLayout {
+public class HomeView extends AbstractView<HomePresenter> {
 
     private final HomePage homePage;
+    private HomePresenter homePresenter;
 
     private VerticalLayout layout;
-    private Label label;
+    private HorizontalLayout daneUzytkownikaLayout;
+    private Panel uzytkownikPanel;
+    private Label welcomeLabel;
+    private Label imieUzytkownikaLabel;
+    private Label nazwiskoUzytkownikaLabel;
+    private Label rolaUzytkownikaLabel;
 
-    public HomeView(HomePage homePage) {
+    private Uzytkownik loggedUzytkownik;
+
+    public HomeView(HomePresenter homePresenter, HomePage homePage) {
+        super(homePresenter);
         this.homePage = homePage;
 
         initComponents();
@@ -24,13 +37,32 @@ public class HomeView extends VerticalLayout {
     }
 
     private void initComponents() {
-        label = new MLabel("Witaj w aplikacji bankowej BankRed System");
+        setCaption(" Pulpit");
+        setIcon(FontAwesome.BANK);
+        setSizeFull();
 
-        layout = new MVerticalLayout(label).withFullWidth().withFullHeight().withSpacing(true).withMargin(true).withAlign(label, Alignment.MIDDLE_CENTER);
+        uzytkownikPanel = new Panel(" Panel użytkownika");
+        uzytkownikPanel.setIcon(FontAwesome.USER);
+        uzytkownikPanel.setSizeFull();
+
+        imieUzytkownikaLabel = new MLabel().withCaption("Imię:");
+        nazwiskoUzytkownikaLabel = new MLabel().withCaption("Nazwisko:");
+        rolaUzytkownikaLabel = new MLabel().withCaption("Rola:");
+
+        daneUzytkownikaLayout = new MHorizontalLayout().with(imieUzytkownikaLabel, nazwiskoUzytkownikaLabel, rolaUzytkownikaLabel).withMargin(true).withSpacing(true).withFullWidth();
+
+        welcomeLabel = new MLabel("Witaj w aplikacji bankowej BankRed System");
+
+        layout = new MVerticalLayout(welcomeLabel, uzytkownikPanel).withFullWidth().withFullHeight().withSpacing(true).withMargin(true).withAlign(welcomeLabel, Alignment.MIDDLE_CENTER);
     }
 
     private void initLayout() {
-        addComponent(layout);
+        uzytkownikPanel.setContent(daneUzytkownikaLayout);
+        setContent(layout);
     }
 
+    @Override
+    public HomePresenter getPresenter() {
+        return homePresenter;
+    }
 }

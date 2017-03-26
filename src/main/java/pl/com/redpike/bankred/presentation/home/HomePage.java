@@ -7,8 +7,10 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CustomComponent;
 import org.vaadin.cdiviewmenu.ViewMenuItem;
+import pl.com.redpike.bankred.control.home.HomePresenter;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 /**
  * Created by rs3 on 22.02.2017.
@@ -19,6 +21,9 @@ public class HomePage extends CustomComponent implements View {
 
     public static final String VIEW_ID = "home";
 
+    @Inject
+    private HomePresenter homePresenter;
+
     private Navigator navigator;
 
     @PostConstruct
@@ -27,7 +32,7 @@ public class HomePage extends CustomComponent implements View {
     }
 
     private void buildLayout() {
-        setCompositionRoot(new HomeView(this));
+        setCompositionRoot(new HomeView(homePresenter, this));
     }
 
     @Override
@@ -37,5 +42,9 @@ public class HomePage extends CustomComponent implements View {
 
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    public HomePresenter getHomePresenter() {
+        return homePresenter;
     }
 }

@@ -19,6 +19,7 @@ public class UprawnienieTabView extends AbstractView<UprawnieniePresenter> {
 
     public UprawnienieTabView(UprawnieniePresenter uprawnieniePresenter, UprawnieniePage uprawnieniePage) {
         super(uprawnieniePresenter);
+        this.uprawnieniePresenter = uprawnieniePresenter;
         this.uprawnieniePage = uprawnieniePage;
 
         initComponents();

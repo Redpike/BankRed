@@ -27,6 +27,7 @@ public class RolaView extends AbstractView<RolaPresenter> {
 
     public RolaView(RolaPresenter rolaPresenter, RolaPage rolaPage) {
         super(rolaPresenter);
+        this.rolaPresenter = rolaPresenter;
         this.rolaPage = rolaPage;
 
         initComponents();

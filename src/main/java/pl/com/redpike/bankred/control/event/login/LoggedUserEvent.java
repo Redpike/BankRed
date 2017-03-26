@@ -1,4 +1,4 @@
-package pl.com.redpike.bankred.control.login;
+package pl.com.redpike.bankred.control.event.login;
 
 /**
  * Created by Redpike

@@ -13,7 +13,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.cdiviewmenu.ViewMenuUI;
 import org.vaadin.viritin.button.MButton;
-import pl.com.redpike.bankred.control.login.LoggedUserEvent;
+import pl.com.redpike.bankred.control.event.login.LoggedUserEvent;
 import pl.com.redpike.bankred.presentation.home.HomePage;
 import pl.com.redpike.bankred.presentation.login.LoginPage;
 

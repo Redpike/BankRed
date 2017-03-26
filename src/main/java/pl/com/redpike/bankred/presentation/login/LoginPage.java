@@ -17,10 +17,10 @@ import javax.inject.Inject;
 @ViewMenuItem(enabled = false)
 public class LoginPage extends CustomComponent implements View {
 
+    public static final String VIEW_ID = "";
+
     @Inject
     private LoginPresenter loginPresenter;
-
-    public static final String VIEW_ID = "";
 
     @PostConstruct
     private void init() {

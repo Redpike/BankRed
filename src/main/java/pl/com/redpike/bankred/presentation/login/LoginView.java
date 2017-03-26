@@ -73,7 +73,7 @@ public class LoginView extends VerticalLayout {
                 Uzytkownik uzytkownik = loginPage.getPresenter().getUzytkownikOnLogIn(usernameField.getValue(), PasswordProvider.hashPassword(passwordField.getValue()));
 
                 if (uzytkownik != null && uzytkownik.getZablokowany().getDatabaseValue().equalsIgnoreCase(UzytkownikZablokowanyEnum.NIE_LOW.getDatabaseValue()))
-                    loginPage.getPresenter().onLoginButtonPressed(uzytkownik.getImie(), uzytkownik.getNazwisko());
+                    loginPage.getPresenter().onLoginButtonPressed(uzytkownik);
                 else if (uzytkownik != null && uzytkownik.getZablokowany().getDatabaseValue().equalsIgnoreCase(UzytkownikZablokowanyEnum.TAK_LOW.getDatabaseValue()))
                     Notification.show("Użytkownik " + usernameField.getValue() + " jest zablokowany. Skontaktuj się z administratorem.", Notification.Type.WARNING_MESSAGE);
                 else
