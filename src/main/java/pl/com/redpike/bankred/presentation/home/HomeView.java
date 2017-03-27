@@ -1,6 +1,5 @@
 package pl.com.redpike.bankred.presentation.home;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.label.MLabel;
@@ -25,8 +24,6 @@ public class HomeView extends AbstractView<HomePresenter> {
     private Label imieUzytkownikaLabel;
     private Label nazwiskoUzytkownikaLabel;
     private Label rolaUzytkownikaLabel;
-
-    private Uzytkownik loggedUzytkownik;
 
     public HomeView(HomePresenter homePresenter, HomePage homePage) {
         super(homePresenter);
@@ -59,6 +56,12 @@ public class HomeView extends AbstractView<HomePresenter> {
     private void initLayout() {
         uzytkownikPanel.setContent(daneUzytkownikaLayout);
         setContent(layout);
+    }
+
+    public void refreshUzytkownikData(Uzytkownik uzytkownik) {
+        imieUzytkownikaLabel.setValue(uzytkownik.getImie());
+        nazwiskoUzytkownikaLabel.setValue(uzytkownik.getNazwisko());
+        rolaUzytkownikaLabel.setValue(uzytkownik.getRola().getNazwa());
     }
 
     @Override

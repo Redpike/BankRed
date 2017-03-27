@@ -1,27 +1,23 @@
 package pl.com.redpike.bankred.control.event.login;
 
+import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
+
 /**
  * Created by Redpike
  */
 public class LoggedUserEvent {
 
-    private String name;
-    private String surname;
+    private Uzytkownik uzytkownik;
 
-    public LoggedUserEvent(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+    public LoggedUserEvent(Uzytkownik uzytkownik) {
+        this.uzytkownik = uzytkownik;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
+    public Uzytkownik getUzytkownik() {
+        return uzytkownik;
     }
 
     public String getNameAndSurname() {
-        return name + " " + surname;
+        return uzytkownik.getImie() + " " + uzytkownik.getNazwisko();
     }
 }

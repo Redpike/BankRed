@@ -130,8 +130,8 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
         setEagerValidation(true);
 
         usernameField.addValidator(new StringLengthValidator("Niepoprawna nazwa użytkownika", 3, 3, false));
-        passwordField.addValidator(new StringLengthValidator("Niepoprawne hasło", 1, 80, false));
-        confirmPasswordField.addValidator(new StringLengthValidator("Niepoprawne hasło", 1, 80, false));
+        passwordField.addValidator(new StringLengthValidator("Podane hasło ma niepoprawną długość", 8, 80, false));
+        confirmPasswordField.addValidator(new StringLengthValidator("Podane hasło ma niepoprawną długość", 8, 80, false));
     }
 
     public void setSelectedUzytkownik(Uzytkownik uzytkownik) {

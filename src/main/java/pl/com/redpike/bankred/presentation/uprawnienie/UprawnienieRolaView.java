@@ -88,6 +88,7 @@ public class UprawnienieRolaView extends VerticalLayout {
             }
 
             crudButtonLayout.getAddButton().setEnabled(Objects.nonNull(rolaComboBox.getValue()));
+            uprawnienieTable.setVisible(Objects.nonNull(rolaComboBox.getValue()));
         });
 
         initCRUDListeners();
@@ -106,6 +107,7 @@ public class UprawnienieRolaView extends VerticalLayout {
 
     private void initUprawnieniaTable() {
         uprawnienieTable = new MTable<>(Uprawnienie.class);
+        uprawnienieTable.setVisible(false);
         uprawnienieTable.setSelectable(true);
         uprawnienieTable.setImmediate(true);
         uprawnienieTable.setSizeFull();

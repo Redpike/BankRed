@@ -7,9 +7,12 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CustomComponent;
 import org.vaadin.cdiviewmenu.ViewMenuItem;
+import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
+import pl.com.redpike.bankred.control.event.login.LoggedUserEvent;
 import pl.com.redpike.bankred.control.home.HomePresenter;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 /**
@@ -25,6 +28,7 @@ public class HomePage extends CustomComponent implements View {
     private HomePresenter homePresenter;
 
     private Navigator navigator;
+    private Uzytkownik uzytkownik;
 
     @PostConstruct
     private void init() {
@@ -35,6 +39,11 @@ public class HomePage extends CustomComponent implements View {
         setCompositionRoot(new HomeView(homePresenter, this));
     }
 
+    public void getUzytkownikPanelData(@Observes LoggedUserEvent event) {
+        uzytkownik = event.getUzytkownik();
+        homePresenter.refreshUzytkownikPanel(uzytkownik);
+    }
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         navigator = getUI().getNavigator();
@@ -42,6 +51,10 @@ public class HomePage extends CustomComponent implements View {
 
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    public Uzytkownik getUzytkownik() {
+        return uzytkownik;
     }
 
     public HomePresenter getHomePresenter() {

@@ -1,6 +1,5 @@
 package pl.com.redpike.bankred.control.login;
 
-import com.google.common.eventbus.EventBus;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
 import pl.com.redpike.bankred.control.event.login.LoggedUserEvent;
 import pl.com.redpike.bankred.control.uzytkownik.UzytkownikPresenter;
@@ -19,8 +18,6 @@ public class LoginPresenter {
     @Inject
     private Event<LoggedUserEvent> loggedUserEvent;
 
-    private EventBus eventBus;
-
     public Uzytkownik getUzytkownik(String username) {
         return uzytkownikPresenter.getUzytkownik(username);
     }
@@ -30,6 +27,6 @@ public class LoginPresenter {
     }
 
     public void onLoginButtonPressed(Uzytkownik uzytkownik) {
-        loggedUserEvent.fire(new LoggedUserEvent(uzytkownik.getImie(), uzytkownik.getNazwisko()));
+        loggedUserEvent.fire(new LoggedUserEvent(uzytkownik));
     }
 }
