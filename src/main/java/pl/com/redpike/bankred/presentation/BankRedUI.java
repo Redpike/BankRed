@@ -4,10 +4,7 @@ import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.cdi.CDIUI;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinSession;
+import com.vaadin.server.*;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
@@ -40,6 +37,7 @@ public class BankRedUI extends ViewMenuUI {
 
     public void userLoggedIn(@Observes LoggedUserEvent event) {
         initLogoutButton();
+        VaadinSession.getCurrent().setAttribute("token", event.getUzytkownik());
         ViewMenuUI.getMenu().setVisible(true);
         ViewMenuUI.getMenu().setMenuTitle("BankRed System");
         ViewMenuUI.getMenu().navigateTo(HomePage.VIEW_ID);
