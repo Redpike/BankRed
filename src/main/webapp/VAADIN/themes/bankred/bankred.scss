@@ -38,4 +38,21 @@
   .tab-sheet-padding .v-verticallayout .v-verticallayout {
     padding: 12px!important;
   }
+
+  .valo-menu .valo-menu-badge,
+  .notifications.unread .v-button-caption {
+    @include valo-badge-style;
+    position: absolute;
+    right: round($v-unit-size/3);
+    font-size: round($v-font-size * 0.9);
+    pointer-events: none;
+  }
+
+  .notifications.unread .v-button-caption {
+    display: block;
+    top: round($v-unit-size / -5);
+    right: round($v-unit-size / -5);
+    display: block;
+    z-index: 1;
+  }
 }

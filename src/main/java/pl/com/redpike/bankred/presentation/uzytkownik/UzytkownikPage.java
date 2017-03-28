@@ -16,7 +16,7 @@ import javax.inject.Inject;
  * Created by rs3 on 22.02.2017.
  */
 @CDIView(UzytkownikPage.VIEW_ID)
-@ViewMenuItem(title = "Uzytkownicy", order = 1, icon = FontAwesome.USERS)
+@ViewMenuItem(title = "Użytkownicy", order = 1, icon = FontAwesome.USERS)
 public class UzytkownikPage extends CustomComponent implements View {
 
     public static final String VIEW_ID = "uzytkownik";

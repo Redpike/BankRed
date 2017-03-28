@@ -31,6 +31,7 @@
         <popupbutton.version>2.5.0</popupbutton.version>
         <viritin.version>1.47</viritin.version>
         <cdi-helpers.version>1.14</cdi-helpers.version>
+        <vaadin-charts.version>3.2.0</vaadin-charts.version>
         <guava.version>19.0</guava.version>
         <vaadin.widgetset.mode>local</vaadin.widgetset.mode>
         <vaadin.theme>bankred</vaadin.theme>
@@ -273,6 +274,13 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+            <version>${vaadin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
             <scope>provided</scope>
@@ -348,6 +356,13 @@
             <groupId>org.vaadin</groupId>
             <artifactId>viritin</artifactId>
             <version>${viritin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin.addon</groupId>
+            <artifactId>vaadin-charts</artifactId>
+            <version>${vaadin-charts.version}</version>
             <scope>provided</scope>
         </dependency>
 

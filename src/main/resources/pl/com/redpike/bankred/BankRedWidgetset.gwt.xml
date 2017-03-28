@@ -7,4 +7,5 @@
     <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 
     <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
+    <inherits name="com.vaadin.addon.charts.Widgetset" />
 </module>

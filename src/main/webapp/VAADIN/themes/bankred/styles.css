@@ -12988,3 +12988,32 @@ div.v-layout.v-horizontal.v-widget {
 .bankred .tab-sheet-padding .v-verticallayout .v-verticallayout {
 	padding: 12px !important;
 }
+
+.bankred .valo-menu .valo-menu-badge, .bankred .notifications.unread .v-button-caption {
+	
+	-webkit-transition: background-color 300ms;
+	-moz-transition: background-color 300ms;
+	transition: background-color 300ms;
+	line-height: 1;
+	padding: 4px 6px;
+	min-width: 11px;
+	text-align: center;
+	top: 4px;
+	border-radius: 4px;
+	background-color: #197de1;
+	background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
+	background-image: linear-gradient(to bottom,#1b87e3 2%, #166ed5 98%);
+	color: #c8dbed;
+	position: absolute;
+	right: 12px;
+	font-size: 14px;
+	pointer-events: none;
+}
+
+.bankred .notifications.unread .v-button-caption {
+	display: block;
+	top: -7px;
+	right: -7px;
+	display: block;
+	z-index: 1;
+}
