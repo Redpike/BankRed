@@ -24,6 +24,7 @@ public class HomeView extends AbstractView<HomePresenter> {
     private VerticalLayout layout;
     private HorizontalLayout daneUzytkownikaLayout;
     private HorizontalLayout welcomeLayout;
+    private SettingsButton settingsButton;
     private LogoutButton logoutButton;
     private Panel uzytkownikPanel;
     private Label imieUzytkownikaLabel;
@@ -32,6 +33,7 @@ public class HomeView extends AbstractView<HomePresenter> {
 
     public HomeView(HomePresenter homePresenter, HomePage homePage) {
         super(homePresenter);
+        this.homePresenter = homePresenter;
         this.homePage = homePage;
 
         initComponents();
@@ -61,6 +63,7 @@ public class HomeView extends AbstractView<HomePresenter> {
     }
 
     private void addListeners() {
+        settingsButton.addClickListener(event -> getUI().addWindow(new HomeEditLoggedUserWindow(homePage, homePage.getUzytkownik())));
         logoutButton.addClickListener(event -> ((BankRedUI) getUI()).logout());
     }
 
@@ -68,7 +71,7 @@ public class HomeView extends AbstractView<HomePresenter> {
         Label welcomeLabel = new MLabel("Witaj w aplikacji bankowej BankRed System");
         NotificationButton notificationButton = new NotificationButton();
         notificationButton.setUnreadCount(2);
-        SettingsButton settingsButton = new SettingsButton();
+        settingsButton = new SettingsButton();
         logoutButton = new LogoutButton();
 
         HorizontalLayout buttonsLayout = new MHorizontalLayout()

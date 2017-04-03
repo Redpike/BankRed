@@ -8,6 +8,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
+import pl.com.redpike.bankred.control.uzytkownik.UzytkownikWindowPresenter;
 
 /**
  * Created by Redpike
@@ -114,5 +115,9 @@ public class UzytkownikAddEditWindow extends Window {
 
     public UzytkownikPage getUzytkownikPage() {
         return uzytkownikPage;
+    }
+
+    public UzytkownikWindowPresenter getPresenter() {
+        return uzytkownikPage.getUzytkownikWindowPresenter();
     }
 }

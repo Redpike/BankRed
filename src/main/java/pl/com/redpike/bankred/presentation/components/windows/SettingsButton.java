@@ -12,6 +12,6 @@ public class SettingsButton extends Button {
     public SettingsButton() {
         setIcon(FontAwesome.GEAR);
         addStyleName(ValoTheme.BUTTON_ICON_ONLY);
-        setDescription("Ustawienia");
+        setDescription("Zmień hasło");
     }
 }

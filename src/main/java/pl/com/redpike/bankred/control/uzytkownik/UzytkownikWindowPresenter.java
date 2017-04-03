@@ -20,4 +20,12 @@ public class UzytkownikWindowPresenter {
     public List<Rola> getRoles() {
         return rolaDAO.findAll();
     }
+
+    public RolaDAO getRolaDAO() {
+        return rolaDAO;
+    }
+
+    public UzytkownikPresenter getUzytkownikPresenter() {
+        return uzytkownikPresenter;
+    }
 }

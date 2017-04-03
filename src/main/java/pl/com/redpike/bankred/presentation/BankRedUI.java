@@ -5,7 +5,10 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.server.*;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.cdiviewmenu.ViewMenuUI;
 import org.vaadin.viritin.button.MButton;
@@ -26,7 +29,6 @@ import javax.enterprise.event.Observes;
 @PreserveOnRefresh
 public class BankRedUI extends ViewMenuUI {
 
-    private VerticalLayout verticalLayout;
     private MenuBar.MenuItem userMenu;
     private Button logoutButton;
 
