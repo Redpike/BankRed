@@ -15,13 +15,11 @@ import java.util.Date;
  * Created by Redpike
  */
 @Entity
-@SequenceGenerator(name = "klient_seq", sequenceName = "klient_seq", allocationSize = 1)
 @Table(name = "klient", schema = BankRedProperites.BANKRED_SCHEMA)
 public class Klient {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "klient_seq")
     @Column(name = "modulo", precision = 7, unique = true, nullable = false)
     private BigDecimal modulo;
 
