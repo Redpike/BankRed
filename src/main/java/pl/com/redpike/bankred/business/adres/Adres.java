@@ -1,53 +1,19 @@
 package pl.com.redpike.bankred.business.adres;
 
-import pl.com.redpike.bankred.util.properties.BankRedProperites;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.math.BigDecimal;
+import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  * Created by Redpike
  */
-@Entity
-@SequenceGenerator(name = "adres_seq", sequenceName = "adres_seq", allocationSize = 1)
-@Table(name = "adres", schema = BankRedProperites.BANKRED_SCHEMA)
+@Embeddable
 public class Adres {
 
-    @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adres_seq")
-    @Column(name = "id", precision = 5, unique = true, nullable = false)
-    private BigDecimal id;
-
-    @Size(max = 50)
-    @Column(name = "ulica", length = 50)
     private String ulica;
-
-    @Size(max = 5)
-    @Column(name = "nr_domu", length = 5)
     private String nrDomu;
-
-    @Size(max = 5)
-    @Column(name = "nr_mieszkania", length = 5)
     private String nrMieszkania;
-
-    @Size(max = 30)
-    @Column(name = "miejscowosc", length = 30)
     private String miejscowosc;
-
-    @Size(max = 6)
-    @Column(name = "kod_p", length = 6)
     private String kodPocztowy;
-
-    public BigDecimal getId() {
-        return id;
-    }
-
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
 
     public String getUlica() {
         return ulica;
@@ -96,7 +62,6 @@ public class Adres {
 
         Adres adres = (Adres) o;
 
-        if (id != null ? !id.equals(adres.id) : adres.id != null) return false;
         if (ulica != null ? !ulica.equals(adres.ulica) : adres.ulica != null) return false;
         if (nrDomu != null ? !nrDomu.equals(adres.nrDomu) : adres.nrDomu != null) return false;
         if (nrMieszkania != null ? !nrMieszkania.equals(adres.nrMieszkania) : adres.nrMieszkania != null) return false;
@@ -106,8 +71,7 @@ public class Adres {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (ulica != null ? ulica.hashCode() : 0);
+        int result = ulica != null ? ulica.hashCode() : 0;
         result = 31 * result + (nrDomu != null ? nrDomu.hashCode() : 0);
         result = 31 * result + (nrMieszkania != null ? nrMieszkania.hashCode() : 0);
         result = 31 * result + (miejscowosc != null ? miejscowosc.hashCode() : 0);
@@ -117,6 +81,9 @@ public class Adres {
 
     @Override
     public String toString() {
-        return ulica + " " + nrDomu + "/" + nrMieszkania + ", " + kodPocztowy + " " + miejscowosc;
+        if (Objects.isNull(nrMieszkania))
+            return ulica + " " + nrDomu + ", " + kodPocztowy + " " + miejscowosc;
+        else
+            return ulica + " " + nrDomu + "/" + nrMieszkania + ", " + kodPocztowy + " " + miejscowosc;
     }
 }

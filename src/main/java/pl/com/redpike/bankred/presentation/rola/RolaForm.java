@@ -33,7 +33,7 @@ public class RolaForm extends AbstractForm<Rola> {
     private void initComponents() {
         rola = new Rola();
 
-        nameField = new MTextField("Nazwa roli");
+        nameField = new MTextField(RolaPropertyUtil.NAZWA_HEADER);
 
         formLayout = new FormLayout(nameField);
 

@@ -1,8 +1,8 @@
 package pl.com.redpike.bankred.business.klient;
 
 import pl.com.redpike.bankred.business.adres.Adres;
-import pl.com.redpike.bankred.business.enums.PlecEnum;
 import pl.com.redpike.bankred.business.enums.PlecConverter;
+import pl.com.redpike.bankred.business.enums.PlecEnum;
 import pl.com.redpike.bankred.util.properties.BankRedProperites;
 
 import javax.persistence.*;
@@ -23,23 +23,23 @@ public class Klient {
     @Column(name = "modulo", precision = 7, unique = true, nullable = false)
     private BigDecimal modulo;
 
-    @Size(min = 11, max = 11)
+    @Size(max = 11)
     @Column(name = "pesel", length = 11)
     private String pesel;
 
-    @Size(min = 14, max = 14)
+    @Size(max = 14)
     @Column(name = "regon", length = 14)
     private String regon;
 
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     @Column(name = "imie", length = 30)
     private String imie;
 
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     @Column(name = "imie2", length = 30)
     private String imie2;
 
-    @Size(min = 1, max = 80)
+    @Size(max = 80)
     @Column(name = "nazwisko", length = 30)
     private String nazwisko;
 
@@ -50,8 +50,13 @@ public class Klient {
     @Column(name = "plec", length = 1)
     private PlecEnum plec;
 
-    @OneToOne
-    @JoinColumn(name = "adres_id")
+    @AttributeOverrides({
+            @AttributeOverride(name = "ulica", column = @Column(name = "ulica", length = 50)),
+            @AttributeOverride(name = "nrDomu", column = @Column(name = "nr_domu", length = 4)),
+            @AttributeOverride(name = "nrMieszkania", column = @Column(name = "nr_mieszkania", length = 5)),
+            @AttributeOverride(name = "miejscowosc", column = @Column(name = "miejscowosc", length = 30)),
+            @AttributeOverride(name = "kodPocztowy", column = @Column(name = "kod_pocztowy", length = 6)),
+    })
     private Adres adres;
 
     public BigDecimal getModulo() {

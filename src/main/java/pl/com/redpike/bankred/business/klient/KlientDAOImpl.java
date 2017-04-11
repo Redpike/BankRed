@@ -30,16 +30,19 @@ public class KlientDAOImpl implements KlientDAO{
 
     @Override
     public void addKlient(Klient klient) {
-
+        em.persist(klient);
+        em.flush();
     }
 
     @Override
     public void editKlient(Klient klient) {
-
+        em.merge(klient);
+        em.flush();
     }
 
     @Override
     public void removeKlient(Klient klient) {
-
+        klient = em.getReference(Klient.class, klient.getModulo());
+        em.remove(klient);
     }
 }

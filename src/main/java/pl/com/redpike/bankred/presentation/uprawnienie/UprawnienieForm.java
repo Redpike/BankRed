@@ -33,7 +33,7 @@ public class UprawnienieForm extends AbstractForm<Uprawnienie> {
     private void initComponents() {
         uprawnienie = new Uprawnienie();
 
-        nameField = new MTextField("Nazwa uprawnienia");
+        nameField = new MTextField(UprawnieniePropertyUtil.NAZWA_HEADER);
 
         formLayout = new FormLayout(nameField);
 

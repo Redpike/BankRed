@@ -57,11 +57,11 @@ public class UzytkownikForm extends AbstractForm<Uzytkownik> {
 
     private void initComponents() {
         uzytkownik = new Uzytkownik();
-        usernameField = new MTextField("Nazwa użytkownika");
-        passwordField = new MPasswordField("Hasło");
+        usernameField = new MTextField(UzytkownikPropertyUtil.NAZWA_HEADER);
+        passwordField = new MPasswordField(UzytkownikPropertyUtil.HASLO_HEADER);
         confirmPasswordField = new MPasswordField("Powtórz hasło");
-        imieField = new MTextField("Imię");
-        nazwiskoField = new MTextField("Nazwisko");
+        imieField = new MTextField(UzytkownikPropertyUtil.IMIE_HEADER);
+        nazwiskoField = new MTextField(UzytkownikPropertyUtil.NAZWISKO_HEADER);
         initComboBoxes();
 
         formLayout = new FormLayout(usernameField, passwordField, confirmPasswordField,

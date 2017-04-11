@@ -12,6 +12,7 @@ import pl.com.redpike.bankred.business.klient.Klient;
 import pl.com.redpike.bankred.control.klient.KlientPresenter;
 import pl.com.redpike.bankred.presentation.components.CRUDButtonLayout;
 import pl.com.redpike.bankred.presentation.components.views.AbstractView;
+import pl.com.redpike.bankred.util.properties.BankRedProperites;
 import pl.com.redpike.bankred.util.properties.KlientPropertyUtil;
 
 import java.text.DateFormat;
@@ -144,7 +145,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
         table.setConverter(KlientPropertyUtil.DATA_URODZENIA, new StringToDateConverter() {
             @Override
             public DateFormat getFormat(Locale locale) {
-                return new SimpleDateFormat("yyyy-MM-dd");
+                return new SimpleDateFormat(BankRedProperites.DATE_FORMAT);
             }
         });
     }

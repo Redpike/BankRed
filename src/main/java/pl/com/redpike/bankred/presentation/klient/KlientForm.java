@@ -1,19 +1,21 @@
 package pl.com.redpike.bankred.presentation.klient;
 
 import com.vaadin.data.fieldgroup.PropertyId;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MDateField;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.form.AbstractForm;
 import pl.com.redpike.bankred.business.enums.PlecEnum;
 import pl.com.redpike.bankred.business.klient.Klient;
+import pl.com.redpike.bankred.control.klient.ModuloGenerator;
+import pl.com.redpike.bankred.util.properties.BankRedProperites;
 import pl.com.redpike.bankred.util.properties.KlientPropertyUtil;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Redpike
@@ -24,7 +26,6 @@ public class KlientForm extends AbstractForm<Klient> {
     private Klient klient;
     private FormLayout formLayout;
     private ComboBox peselRegonComboBox;
-    private Button adresButton;
 
     @PropertyId(KlientPropertyUtil.MODULO)
     private TextField moduloField;
@@ -62,18 +63,20 @@ public class KlientForm extends AbstractForm<Klient> {
     private void initComponents() {
         initPeselRegonComboBox();
         klient = new Klient();
-        moduloField = new MTextField("Modulo");
-        peselField = new MTextField("PESEL");
-        regonField = new MTextField("REGON");
-        imieField = new MTextField("Imię");
-        imie2Field = new MTextField("Drugie imię");
-        nazwiskoField = new MTextField("Nazwisko");
-        dataUrodzeniaField = new MDateField("Data urodzenia");
+        moduloField = new MTextField(KlientPropertyUtil.MODULO_HEADER);
+        moduloField.setValue(String.valueOf(ModuloGenerator.generateModulo()));
+        peselField = new MTextField(KlientPropertyUtil.PESEL_HEADER);
+        regonField = new MTextField(KlientPropertyUtil.REGON_HEADER);
+        imieField = new MTextField(KlientPropertyUtil.IMIE_HEADER);
+        imie2Field = new MTextField(KlientPropertyUtil.IMIE2_HEADER);
+        nazwiskoField = new MTextField(KlientPropertyUtil.NAZWISKO_HEADER);
+        dataUrodzeniaField = new MDateField(KlientPropertyUtil.DATA_URODZENIA_HEADER);
+        dataUrodzeniaField.setValue(new Date());
+        dataUrodzeniaField.setDateFormat(BankRedProperites.DATE_FORMAT);
         initPlecComboBox();
-        adresButton = new MButton("Adres").withIcon(FontAwesome.HOME).withStyleName(ValoTheme.BUTTON_SMALL);
 
         formLayout = new FormLayout(peselRegonComboBox, moduloField, peselField, regonField, imieField, imie2Field, nazwiskoField,
-                dataUrodzeniaField, plecComboBox, adresButton);
+                dataUrodzeniaField, plecComboBox);
 
         setImmediate(true);
         setCompositionRoot(formLayout);
@@ -84,7 +87,7 @@ public class KlientForm extends AbstractForm<Klient> {
         peselRegonComboBox.setCaption("Rodzaj klienta");
         peselRegonComboBox.setImmediate(true);
         peselRegonComboBox.setNullSelectionAllowed(false);
-        peselRegonComboBox.addItems("PESEL", "REGON");
+        peselRegonComboBox.addItems(KlientPropertyUtil.PESEL_HEADER, KlientPropertyUtil.REGON_HEADER);
     }
 
     private void initPlecComboBox() {
@@ -98,36 +101,51 @@ public class KlientForm extends AbstractForm<Klient> {
     }
 
     private void initLayout() {
+        moduloField.setReadOnly(true);
         peselField.setVisible(false);
         regonField.setVisible(false);
 
         formLayout.forEach(component -> component.setWidth(300, Unit.PIXELS));
-        adresButton.setWidth(100, Unit.PIXELS);
         formLayout.setSizeFull();
     }
 
     private void addListeners() {
         peselRegonComboBox.addValueChangeListener(event -> {
-            peselField.setVisible(peselRegonComboBox.getValue().equals("PESEL"));
-            regonField.setVisible(peselRegonComboBox.getValue().equals("REGON"));
+            peselField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.PESEL_HEADER));
+            regonField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.REGON_HEADER));
         });
     }
 
     private void addValidators() {
-
+        peselRegonComboBox.addValidator(new NullValidator("Proszę wybrać jedną z dostępnych opcji", false));
     }
 
     public void setSelectedKlient(Klient klient) {
         this.klient = klient;
         peselRegonComboBox.setVisible(false);
+        moduloField.setReadOnly(false);
         moduloField.setValue(String.valueOf(klient.getModulo()));
-        peselField.setValue(klient.getPesel());
+        moduloField.setReadOnly(true);
         regonField.setValue(klient.getRegon());
         imieField.setValue(klient.getImie());
         imie2Field.setValue(klient.getImie2());
         nazwiskoField.setValue(klient.getNazwisko());
         dataUrodzeniaField.setValue(klient.getDataUrodzenia());
         plecComboBox.setValue(klient.getPlec());
+
+        chechKlientType();
+    }
+
+    private void chechKlientType() {
+        if (Objects.nonNull(klient.getPesel())) {
+            peselField.setVisible(true);
+            peselField.setValue(klient.getPesel());
+            regonField.setVisible(false);
+        } else {
+            peselField.setVisible(false);
+            regonField.setVisible(true);
+            regonField.setValue(klient.getRegon());
+        }
     }
 
     public boolean isValid() {
@@ -148,7 +166,6 @@ public class KlientForm extends AbstractForm<Klient> {
         klient.setNazwisko(nazwiskoField.getValue());
         klient.setDataUrodzenia(dataUrodzeniaField.getValue());
         klient.setPlec((PlecEnum) plecComboBox.getValue());
-//        klient.setAdres();
 
         return klient;
     }
