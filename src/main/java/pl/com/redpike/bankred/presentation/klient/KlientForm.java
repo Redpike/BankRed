@@ -48,6 +48,9 @@ public class KlientForm extends AbstractForm<Klient> {
     @PropertyId(KlientPropertyUtil.DATA_URODZENIA)
     private DateField dataUrodzeniaField;
 
+    @PropertyId(KlientPropertyUtil.DATA_ZALOZENIA)
+    private DateField dataZalozeniaField;
+
     @PropertyId(KlientPropertyUtil.PLEC)
     private ComboBox plecComboBox;
 
@@ -73,10 +76,13 @@ public class KlientForm extends AbstractForm<Klient> {
         dataUrodzeniaField = new MDateField(KlientPropertyUtil.DATA_URODZENIA_HEADER);
         dataUrodzeniaField.setValue(new Date());
         dataUrodzeniaField.setDateFormat(BankRedProperites.DATE_FORMAT);
+        dataZalozeniaField = new MDateField(KlientPropertyUtil.DATA_ZALOZENIA_HEADER);
+        dataZalozeniaField.setValue(new Date());
+        dataZalozeniaField.setDateFormat(BankRedProperites.DATE_FORMAT);
         initPlecComboBox();
 
         formLayout = new FormLayout(peselRegonComboBox, moduloField, peselField, regonField, imieField, imie2Field, nazwiskoField,
-                dataUrodzeniaField, plecComboBox);
+                dataUrodzeniaField, dataZalozeniaField, plecComboBox);
 
         setImmediate(true);
         setCompositionRoot(formLayout);
@@ -104,6 +110,8 @@ public class KlientForm extends AbstractForm<Klient> {
         moduloField.setReadOnly(true);
         peselField.setVisible(false);
         regonField.setVisible(false);
+        dataUrodzeniaField.setVisible(false);
+        dataZalozeniaField.setVisible(false);
 
         formLayout.forEach(component -> component.setWidth(300, Unit.PIXELS));
         formLayout.setSizeFull();
@@ -113,6 +121,9 @@ public class KlientForm extends AbstractForm<Klient> {
         peselRegonComboBox.addValueChangeListener(event -> {
             peselField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.PESEL_HEADER));
             regonField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.REGON_HEADER));
+            plecComboBox.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.PESEL_HEADER));
+            dataUrodzeniaField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.PESEL_HEADER));
+            dataZalozeniaField.setVisible(peselRegonComboBox.getValue().equals(KlientPropertyUtil.REGON_HEADER));
         });
     }
 
@@ -131,21 +142,35 @@ public class KlientForm extends AbstractForm<Klient> {
         imie2Field.setValue(klient.getImie2());
         nazwiskoField.setValue(klient.getNazwisko());
         dataUrodzeniaField.setValue(klient.getDataUrodzenia());
+        dataZalozeniaField.setValue(klient.getDataZalozenia());
         plecComboBox.setValue(klient.getPlec());
 
         chechKlientType();
     }
 
     private void chechKlientType() {
-        if (Objects.nonNull(klient.getPesel())) {
-            peselField.setVisible(true);
-            peselField.setValue(klient.getPesel());
-            regonField.setVisible(false);
-        } else {
-            peselField.setVisible(false);
-            regonField.setVisible(true);
-            regonField.setValue(klient.getRegon());
-        }
+        if (Objects.nonNull(klient.getPesel()))
+            prepareFormForOsobyFizycznej();
+        else
+            prepareFormForPodmiotuGospodarczego();
+    }
+
+    private void prepareFormForOsobyFizycznej() {
+        peselField.setVisible(true);
+        peselField.setValue(klient.getPesel());
+        plecComboBox.setVisible(true);
+        regonField.setVisible(false);
+        dataUrodzeniaField.setVisible(true);
+        dataZalozeniaField.setVisible(false);
+    }
+
+    private void prepareFormForPodmiotuGospodarczego() {
+        peselField.setVisible(false);
+        plecComboBox.setVisible(false);
+        regonField.setVisible(true);
+        regonField.setValue(klient.getRegon());
+        dataUrodzeniaField.setVisible(false);
+        dataZalozeniaField.setVisible(true);
     }
 
     public boolean isValid() {
@@ -164,8 +189,12 @@ public class KlientForm extends AbstractForm<Klient> {
         klient.setImie(imieField.getValue());
         klient.setImie2(imie2Field.getValue());
         klient.setNazwisko(nazwiskoField.getValue());
-        klient.setDataUrodzenia(dataUrodzeniaField.getValue());
-        klient.setPlec((PlecEnum) plecComboBox.getValue());
+
+        if (Objects.nonNull(klient.getPesel())) {
+            klient.setPlec((PlecEnum) plecComboBox.getValue());
+            klient.setDataUrodzenia(dataUrodzeniaField.getValue());
+        } else
+            klient.setDataZalozenia(dataZalozeniaField.getValue());
 
         return klient;
     }

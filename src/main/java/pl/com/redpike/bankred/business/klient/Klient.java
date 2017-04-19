@@ -46,6 +46,9 @@ public class Klient {
     @Column(name = "data_ur")
     private Date dataUrodzenia;
 
+    @Column(name = "data_zal")
+    private Date dataZalozenia;
+
     @Convert(converter = PlecConverter.class)
     @Column(name = "plec", length = 1)
     private PlecEnum plec;
@@ -115,6 +118,14 @@ public class Klient {
         this.dataUrodzenia = dataUrodzenia;
     }
 
+    public Date getDataZalozenia() {
+        return dataZalozenia;
+    }
+
+    public void setDataZalozenia(Date dataZalozenia) {
+        this.dataZalozenia = dataZalozenia;
+    }
+
     public PlecEnum getPlec() {
         return plec;
     }
@@ -146,6 +157,8 @@ public class Klient {
         if (nazwisko != null ? !nazwisko.equals(klient.nazwisko) : klient.nazwisko != null) return false;
         if (dataUrodzenia != null ? !dataUrodzenia.equals(klient.dataUrodzenia) : klient.dataUrodzenia != null)
             return false;
+        if (dataZalozenia != null ? !dataZalozenia.equals(klient.dataZalozenia) : klient.dataZalozenia != null)
+            return false;
         if (plec != klient.plec) return false;
         return adres != null ? adres.equals(klient.adres) : klient.adres == null;
     }
@@ -159,6 +172,7 @@ public class Klient {
         result = 31 * result + (imie2 != null ? imie2.hashCode() : 0);
         result = 31 * result + (nazwisko != null ? nazwisko.hashCode() : 0);
         result = 31 * result + (dataUrodzenia != null ? dataUrodzenia.hashCode() : 0);
+        result = 31 * result + (dataZalozenia != null ? dataZalozenia.hashCode() : 0);
         result = 31 * result + (plec != null ? plec.hashCode() : 0);
         result = 31 * result + (adres != null ? adres.hashCode() : 0);
         return result;
@@ -174,6 +188,7 @@ public class Klient {
                 ", imie2='" + imie2 + '\'' +
                 ", nazwisko='" + nazwisko + '\'' +
                 ", dataUrodzenia=" + dataUrodzenia +
+                ", dataZalozenia=" + dataZalozenia +
                 ", plec=" + plec +
                 ", adres=" + adres +
                 '}';

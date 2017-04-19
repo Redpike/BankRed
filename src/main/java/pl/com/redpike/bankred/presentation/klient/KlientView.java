@@ -1,6 +1,5 @@
 package pl.com.redpike.bankred.presentation.klient;
 
-import com.vaadin.data.util.converter.StringToDateConverter;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
@@ -9,15 +8,11 @@ import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.enums.PlecEnum;
 import pl.com.redpike.bankred.business.klient.Klient;
+import pl.com.redpike.bankred.control.klient.DateConverter;
 import pl.com.redpike.bankred.control.klient.KlientPresenter;
 import pl.com.redpike.bankred.presentation.components.CRUDButtonLayout;
 import pl.com.redpike.bankred.presentation.components.views.AbstractView;
-import pl.com.redpike.bankred.util.properties.BankRedProperites;
 import pl.com.redpike.bankred.util.properties.KlientPropertyUtil;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 /**
  * Created by Redpike
@@ -30,6 +25,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
     private CRUDButtonLayout buttonLayout;
     private MTable<Klient> table;
     private KlientAddEditWindow klientAddEditWindow;
+    private DateConverter dateConverter;
 
     public KlientView(KlientPresenter presenter, KlientPage klientPage) {
         super(presenter);
@@ -44,6 +40,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
         buttonLayout = new CRUDButtonLayout();
         buttonLayout.getEditButton().setEnabled(false);
         buttonLayout.getDeleteButton().setEnabled(false);
+        dateConverter = new DateConverter();
 
         initKlientTable();
         verticalLayout = new MVerticalLayout()
@@ -111,6 +108,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
                 KlientPropertyUtil.IMIE,
                 KlientPropertyUtil.NAZWISKO,
                 KlientPropertyUtil.DATA_URODZENIA,
+                KlientPropertyUtil.DATA_ZALOZENIA,
                 KlientPropertyUtil.PLEC,
                 KlientPropertyUtil.ADRES
         );
@@ -128,6 +126,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
                 KlientPropertyUtil.IMIE_HEADER,
                 KlientPropertyUtil.NAZWISKO_HEADER,
                 KlientPropertyUtil.DATA_URODZENIA_HEADER,
+                KlientPropertyUtil.DATA_ZALOZENIA_HEADER,
                 KlientPropertyUtil.PLEC_HEADER,
                 KlientPropertyUtil.ADRES_HEADER
         );
@@ -142,11 +141,7 @@ public class KlientView extends AbstractView<KlientPresenter> {
             return null;
         });
 
-        table.setConverter(KlientPropertyUtil.DATA_URODZENIA, new StringToDateConverter() {
-            @Override
-            public DateFormat getFormat(Locale locale) {
-                return new SimpleDateFormat(BankRedProperites.DATE_FORMAT);
-            }
-        });
+        table.setConverter(KlientPropertyUtil.DATA_URODZENIA, dateConverter);
+        table.setConverter(KlientPropertyUtil.DATA_ZALOZENIA, dateConverter);
     }
 }

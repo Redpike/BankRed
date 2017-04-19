@@ -12,6 +12,7 @@ public class KlientPropertyUtil {
     public static final String IMIE2 = "imie2";
     public static final String NAZWISKO = "nazwisko";
     public static final String DATA_URODZENIA = "dataUrodzenia";
+    public static final String DATA_ZALOZENIA = "dataZalozenia";
     public static final String PLEC = "plec";
     public static final String ADRES = "adres";
 
@@ -22,6 +23,7 @@ public class KlientPropertyUtil {
     public static final String IMIE2_HEADER = "Drugie imię";
     public static final String NAZWISKO_HEADER = "Nazwisko";
     public static final String DATA_URODZENIA_HEADER = "Data urodzenia";
+    public static final String DATA_ZALOZENIA_HEADER = "Data założenia";
     public static final String PLEC_HEADER = "Płeć";
     public static final String ADRES_HEADER = "Adres";
 }
