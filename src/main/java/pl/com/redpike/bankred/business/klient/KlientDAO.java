@@ -12,8 +12,6 @@ public interface KlientDAO {
 
     List<Klient> findAll();
 
-    Klient getKlient(BigDecimal modulo);
-
     void addKlient(Klient klient);
 
     void editKlient(Klient klient);

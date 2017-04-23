@@ -8,7 +8,7 @@ import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import pl.com.redpike.bankred.business.enums.PlecEnum;
 import pl.com.redpike.bankred.business.klient.Klient;
-import pl.com.redpike.bankred.control.klient.DateConverter;
+import pl.com.redpike.bankred.control.converters.DateConverter;
 import pl.com.redpike.bankred.control.klient.KlientPresenter;
 import pl.com.redpike.bankred.presentation.components.CRUDButtonLayout;
 import pl.com.redpike.bankred.presentation.components.views.AbstractView;

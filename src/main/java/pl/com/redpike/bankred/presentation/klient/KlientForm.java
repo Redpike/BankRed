@@ -67,7 +67,7 @@ public class KlientForm extends AbstractForm<Klient> {
         initPeselRegonComboBox();
         klient = new Klient();
         moduloField = new MTextField(KlientPropertyUtil.MODULO_HEADER);
-        moduloField.setValue(String.valueOf(ModuloGenerator.generateModulo()));
+        moduloField.setValue(ModuloGenerator.generateModulo());
         peselField = new MTextField(KlientPropertyUtil.PESEL_HEADER);
         regonField = new MTextField(KlientPropertyUtil.REGON_HEADER);
         imieField = new MTextField(KlientPropertyUtil.IMIE_HEADER);
@@ -98,7 +98,7 @@ public class KlientForm extends AbstractForm<Klient> {
 
     private void initPlecComboBox() {
         plecComboBox = new ComboBox();
-        plecComboBox.setCaption("Płeć");
+        plecComboBox.setCaption(KlientPropertyUtil.PLEC_HEADER);
         plecComboBox.setNullSelectionAllowed(false);
         List<PlecEnum> plecList = PlecEnum.getEnumsForComboBox();
         plecComboBox.addItems(plecList);
@@ -137,7 +137,6 @@ public class KlientForm extends AbstractForm<Klient> {
         moduloField.setReadOnly(false);
         moduloField.setValue(String.valueOf(klient.getModulo()));
         moduloField.setReadOnly(true);
-        regonField.setValue(klient.getRegon());
         imieField.setValue(klient.getImie());
         imie2Field.setValue(klient.getImie2());
         nazwiskoField.setValue(klient.getNazwisko());
@@ -173,6 +172,7 @@ public class KlientForm extends AbstractForm<Klient> {
         dataZalozeniaField.setVisible(true);
     }
 
+    @Override
     public boolean isValid() {
         if (moduloField.isValid()) {
             Klient klient = createKlient();

@@ -1,4 +1,4 @@
-package pl.com.redpike.bankred.control.klient;
+package pl.com.redpike.bankred.control.converters;
 
 import com.vaadin.data.util.converter.StringToDateConverter;
 import pl.com.redpike.bankred.util.properties.BankRedProperites;

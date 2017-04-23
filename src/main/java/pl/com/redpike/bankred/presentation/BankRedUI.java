@@ -3,6 +3,7 @@ package pl.com.redpike.bankred.presentation;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.server.*;
 import com.vaadin.ui.Button;
@@ -14,6 +15,7 @@ import org.vaadin.cdiviewmenu.ViewMenuUI;
 import org.vaadin.viritin.button.MButton;
 import pl.com.redpike.bankred.business.uzytkownik.Uzytkownik;
 import pl.com.redpike.bankred.control.event.login.LoggedUserEvent;
+import pl.com.redpike.bankred.presentation.error.ErrorPage;
 import pl.com.redpike.bankred.presentation.home.HomePage;
 import pl.com.redpike.bankred.presentation.login.LoginPage;
 import pl.com.redpike.bankred.util.styles.Styles;
@@ -26,6 +28,7 @@ import javax.enterprise.event.Observes;
 @CDIUI("")
 @Title("BankRed")
 @Theme("bankred")
+@Widgetset("pl.com.redpike.bankred.BankRedWidgetset")
 @PreserveOnRefresh
 public class BankRedUI extends ViewMenuUI {
 
@@ -38,6 +41,7 @@ public class BankRedUI extends ViewMenuUI {
 
         ViewMenuUI.getMenu().setVisible(false);
         ViewMenuUI.getMenu().navigateTo(LoginPage.VIEW_ID);
+        ViewMenuUI.getCurrent().setErrorHandler((ErrorHandler) errorEvent -> ViewMenuUI.getMenu().navigateTo(ErrorPage.VIEW_ID));
     }
 
     public void userLoggedIn(@Observes LoggedUserEvent event) {

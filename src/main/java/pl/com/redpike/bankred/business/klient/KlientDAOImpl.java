@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Redpike
  */
 @Stateless
-public class KlientDAOImpl implements KlientDAO{
+public class KlientDAOImpl implements KlientDAO {
 
     @PersistenceContext(unitName = BankRedProperites.BANKRED_PU)
     private EntityManager em;
@@ -21,11 +21,6 @@ public class KlientDAOImpl implements KlientDAO{
     public List<Klient> findAll() {
         return em.createNativeQuery("SELECT * FROM Klient k", Klient.class)
                 .getResultList();
-    }
-
-    @Override
-    public Klient getKlient(BigDecimal modulo) {
-        return null;
     }
 
     @Override

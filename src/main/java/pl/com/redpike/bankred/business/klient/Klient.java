@@ -180,17 +180,6 @@ public class Klient {
 
     @Override
     public String toString() {
-        return "Klient{" +
-                "modulo=" + modulo +
-                ", pesel='" + pesel + '\'' +
-                ", regon='" + regon + '\'' +
-                ", imie='" + imie + '\'' +
-                ", imie2='" + imie2 + '\'' +
-                ", nazwisko='" + nazwisko + '\'' +
-                ", dataUrodzenia=" + dataUrodzenia +
-                ", dataZalozenia=" + dataZalozenia +
-                ", plec=" + plec +
-                ", adres=" + adres +
-                '}';
+        return imie + " " + nazwisko;
     }
 }

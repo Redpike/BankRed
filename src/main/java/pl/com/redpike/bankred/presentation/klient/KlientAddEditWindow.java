@@ -116,7 +116,7 @@ public class KlientAddEditWindow extends Window {
                 klient.setAdres(adres);
                 klientPage.getKlientPresenter().editKlient(klient);
                 klientPage.getKlientPresenter().getView().refreshTable();
-                Notification.show("Zapisano użytkownika", Notification.Type.TRAY_NOTIFICATION);
+                Notification.show("Edytowano klienta", Notification.Type.TRAY_NOTIFICATION);
                 close();
             } else
                 Notification.show("Niepoprawne dane formularza", Notification.Type.ERROR_MESSAGE);
